@@ -118,4 +118,8 @@ public class OTMidiHardwareControls {
 	private String createId(String name) {
 		return String.format("OT_MIDI_%d_%d_%s", trackNumber, channel, name);
 	}
+
+	public List<AbsoluteHardwareKnob> getCcKnobs() {
+		return ccKnobs;
+	}
 }

@@ -1,11 +1,11 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.layout;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 
-public class OTVolumeConfig extends OTMainTrackLayout {
+public class OTVolumeLayout extends OTMainTrackLayout {
 
-	public OTVolumeConfig(ControllerHost host) {
+	public OTVolumeLayout(ControllerHost host) {
 		super(host);
 	}
 

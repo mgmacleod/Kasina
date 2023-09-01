@@ -1,9 +1,10 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.layout;
 
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.Transport;
+import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
 public abstract class OTTransportLayout extends OTMidiTrackLayout {
 
@@ -19,7 +20,7 @@ public abstract class OTTransportLayout extends OTMidiTrackLayout {
 		controls.bindToStopButton(transport.stopAction());
 
 		for (int i = 0; i < PAGE_SIZE; i++) {
-			AbsoluteHardwareKnob knob = controls.ccKnobs.get(i);
+			AbsoluteHardwareKnob knob = controls.getCcKnobs().get(i);
 			knob.setBinding(getItemAt(i));
 		}
 	}

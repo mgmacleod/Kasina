@@ -2,6 +2,8 @@ package com.missinggreenmammals.octatrack;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
+import com.missinggreenmammals.octatrack.layout.OTProjectRemoteLayout;
+import com.missinggreenmammals.octatrack.layout.OTTransportLayout;
 
 public class OTProjectRemotes extends OTMidiTrack {
 
