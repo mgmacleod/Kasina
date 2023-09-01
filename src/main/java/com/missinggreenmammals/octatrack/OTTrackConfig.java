@@ -12,4 +12,12 @@ public abstract class OTTrackConfig extends OTConfiguration {
 	}
 
 	protected abstract TrackBank createTrackBank(ControllerHost host);
+
+	@Override
+	public void applyTo(OTMidiHardwareControls controls) {
+		super.applyTo(controls);
+
+		controls.bindToPrevButton(trackBank.scrollPageBackwardsAction());
+		controls.bindToNextButton(trackBank.scrollPageForwardsAction());
+	}
 }

@@ -1,15 +1,17 @@
 package com.missinggreenmammals.octatrack;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.bitwig.extension.controller.api.AbsoluteHardwareControlBinding;
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
-import com.bitwig.extension.controller.api.HardwareActionBindable;
 import com.bitwig.extension.controller.api.HardwareActionBinding;
+import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.HardwareButton;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.MidiOut;
-import com.bitwig.extension.controller.api.Parameter;
 
 public class OTMidiHardwareControls {
 	public static final int CC1 = 7;
@@ -34,6 +36,7 @@ public class OTMidiHardwareControls {
 	protected final AbsoluteHardwareKnob cc8knob;
 	protected final AbsoluteHardwareKnob cc9knob;
 	protected final AbsoluteHardwareKnob cc10knob;
+	protected List<AbsoluteHardwareKnob> ccKnobs;
 
 	protected final HardwareButton playButton;
 	protected final HardwareButton stopButton;
@@ -65,6 +68,9 @@ public class OTMidiHardwareControls {
 		cc9knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC9"));
 		cc10knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC10"));
 
+		ccKnobs = Arrays.asList(cc1knob, cc2knob, cc3knob, cc4knob, cc5knob, cc6knob, cc7knob, cc8knob, cc9knob,
+				cc10knob);
+
 		playButton = hardwareSurface.createHardwareButton(createId("PLAY"));
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
@@ -76,59 +82,59 @@ public class OTMidiHardwareControls {
 ////	stopButton.pressedAction().setBinding(transport.stopAction());
 	}
 
-	public HardwareActionBinding bindToPlayButton(HardwareActionBindable bindable) {
+	public HardwareActionBinding bindToPlayButton(HardwareBindable bindable) {
 		return playButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToStopButton(HardwareActionBindable bindable) {
+	public HardwareActionBinding bindToStopButton(HardwareBindable bindable) {
 		return stopButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToNextButton(HardwareActionBindable bindable) {
+	public HardwareActionBinding bindToNextButton(HardwareBindable bindable) {
 		return nextButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToPrevButton(HardwareActionBindable bindable) {
+	public HardwareActionBinding bindToPrevButton(HardwareBindable bindable) {
 		return prevButton.pressedAction().setBinding(bindable);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC1Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC1Knob(HardwareBindable param) {
 		return cc1knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC2Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC2Knob(HardwareBindable param) {
 		return cc2knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC3Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC3Knob(HardwareBindable param) {
 		return cc3knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC4Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC4Knob(HardwareBindable param) {
 		return cc4knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC5Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC5Knob(HardwareBindable param) {
 		return cc5knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC6Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC6Knob(HardwareBindable param) {
 		return cc6knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC7Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC7Knob(HardwareBindable param) {
 		return cc7knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC8Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC8Knob(HardwareBindable param) {
 		return cc8knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC9Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC9Knob(HardwareBindable param) {
 		return cc9knob.setBinding(param);
 	}
 
-	public AbsoluteHardwareControlBinding bindToCC10Knob(Parameter param) {
+	public AbsoluteHardwareControlBinding bindToCC10Knob(HardwareBindable param) {
 		return cc10knob.setBinding(param);
 	}
 
