@@ -30,3 +30,4 @@ replay_pid*
 /.settings
 .classpath
 .project
+/${bitwig.extension.directory}
