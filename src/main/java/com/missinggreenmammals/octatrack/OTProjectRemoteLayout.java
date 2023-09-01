@@ -5,12 +5,12 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.Track;
 
-public class OTProjectRemoteConfig extends OTProjectConfig {
+public class OTProjectRemoteLayout extends OTProjectLayout {
 
-	private final Track rootTrackGroup;
-	private final CursorRemoteControlsPage controlsPage;
+	protected final Track rootTrackGroup;
+	protected final CursorRemoteControlsPage controlsPage;
 
-	public OTProjectRemoteConfig(ControllerHost host) {
+	public OTProjectRemoteLayout(ControllerHost host) {
 		super(host);
 
 		rootTrackGroup = project.getRootTrackGroup();

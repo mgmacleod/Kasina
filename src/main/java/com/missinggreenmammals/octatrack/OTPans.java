@@ -14,8 +14,8 @@ public class OTPans extends OTMidiTrack {
 	}
 
 	@Override
-	protected OTConfiguration createConfig(ControllerHost host) {
-		return new OTPanConfig(host);
+	protected OTTransportLayout createConfig(ControllerHost host) {
+		return new OTPanLayout(host);
 	}
 
 

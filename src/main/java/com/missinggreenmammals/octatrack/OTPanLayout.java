@@ -3,9 +3,9 @@ package com.missinggreenmammals.octatrack;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 
-public class OTPanConfig extends OTMainTrackConfig {
+public class OTPanLayout extends OTMainTrackLayout {
 
-	public OTPanConfig(ControllerHost host) {
+	public OTPanLayout(ControllerHost host) {
 		super(host);
 	}
 

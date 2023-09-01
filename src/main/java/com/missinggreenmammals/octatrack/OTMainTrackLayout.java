@@ -3,9 +3,9 @@ package com.missinggreenmammals.octatrack;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.TrackBank;
 
-public abstract class OTMainTrackConfig extends OTTrackConfig {
+public abstract class OTMainTrackLayout extends OTTrackLayout {
 
-	public OTMainTrackConfig(ControllerHost host) {
+	public OTMainTrackLayout(ControllerHost host) {
 		super(host);
 	}
 

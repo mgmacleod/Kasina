@@ -5,12 +5,11 @@ import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.Transport;
 
-public abstract class OTConfiguration {
-	public static final int PAGE_SIZE = 10;
+public abstract class OTTransportLayout extends OTMidiTrackLayout {
 
 	protected final Transport transport;
 
-	public OTConfiguration(ControllerHost host) {
+	public OTTransportLayout(ControllerHost host) {
 		transport = host.createTransport();
 	}
 

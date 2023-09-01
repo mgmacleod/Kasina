@@ -15,8 +15,8 @@ public class OTProjectRemotes extends OTMidiTrack {
 	}
 
 	@Override
-	protected OTConfiguration createConfig(ControllerHost host) {
-		return new OTProjectRemoteConfig(host);
+	protected OTTransportLayout createConfig(ControllerHost host) {
+		return new OTProjectRemoteLayout(host);
 	}
 
 

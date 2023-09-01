@@ -9,7 +9,7 @@ public abstract class OTMidiTrack {
 	protected final HardwareSurface hardwareSurface;
 	protected final ControllerHost host;
 	protected final OTMidiHardwareControls controls;
-	protected final OTConfiguration config;
+	protected final OTTransportLayout config;
 
 	public OTMidiTrack(final String name, final int channel, final int trackNumber, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
@@ -23,7 +23,7 @@ public abstract class OTMidiTrack {
 		config.applyTo(controls);
 	}
 
-	protected abstract OTConfiguration createConfig(ControllerHost host);
+	protected abstract OTTransportLayout createConfig(ControllerHost host);
 
 //	protected abstract void setBindings(ControllerHost host);
 
