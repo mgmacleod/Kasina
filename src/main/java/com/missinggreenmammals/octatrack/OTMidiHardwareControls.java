@@ -3,7 +3,6 @@ package com.missinggreenmammals.octatrack;
 import java.util.Arrays;
 import java.util.List;
 
-import com.bitwig.extension.controller.api.AbsoluteHardwareControlBinding;
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareActionBinding;
@@ -78,8 +77,6 @@ public class OTMidiHardwareControls {
 
 		initValueMatchers();
 
-//		playButton.pressedAction().setBinding(transport.playAction());
-////	stopButton.pressedAction().setBinding(transport.stopAction());
 	}
 
 	public HardwareActionBinding bindToPlayButton(HardwareBindable bindable) {
@@ -96,46 +93,6 @@ public class OTMidiHardwareControls {
 
 	public HardwareActionBinding bindToPrevButton(HardwareBindable bindable) {
 		return prevButton.pressedAction().setBinding(bindable);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC1Knob(HardwareBindable param) {
-		return cc1knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC2Knob(HardwareBindable param) {
-		return cc2knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC3Knob(HardwareBindable param) {
-		return cc3knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC4Knob(HardwareBindable param) {
-		return cc4knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC5Knob(HardwareBindable param) {
-		return cc5knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC6Knob(HardwareBindable param) {
-		return cc6knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC7Knob(HardwareBindable param) {
-		return cc7knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC8Knob(HardwareBindable param) {
-		return cc8knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC9Knob(HardwareBindable param) {
-		return cc9knob.setBinding(param);
-	}
-
-	public AbsoluteHardwareControlBinding bindToCC10Knob(HardwareBindable param) {
-		return cc10knob.setBinding(param);
 	}
 
 	private void initValueMatchers() {
