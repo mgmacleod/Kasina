@@ -21,6 +21,8 @@ public class OTMidiHardwareControls {
 	protected final HardwareButton stopButton;
 	protected final HardwareButton prevButton;
 	protected final HardwareButton nextButton;
+	protected final HardwareButton subPrevButton1;
+	protected final HardwareButton subNextButton1;
 
 	protected final MidiIn midiIn;
 	protected final MidiOut midiOut;
@@ -30,6 +32,7 @@ public class OTMidiHardwareControls {
 
 	public OTMidiHardwareControls(final int channel, final int trackNumber, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
+
 		midiIn = host.getMidiInPort(0);
 		midiOut = host.getMidiOutPort(0);
 		this.channel = channel;
@@ -46,6 +49,8 @@ public class OTMidiHardwareControls {
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
 		nextButton = hardwareSurface.createHardwareButton(createId("NEXT"));
+		subPrevButton1 = hardwareSurface.createHardwareButton(createId("SUB_PREV1"));
+		subNextButton1 = hardwareSurface.createHardwareButton(createId("SUB_NEXT1"));
 
 		initValueMatchers();
 
@@ -67,6 +72,14 @@ public class OTMidiHardwareControls {
 		return prevButton.pressedAction().setBinding(bindable);
 	}
 
+	public HardwareActionBinding bindToSubNext1Button(HardwareBindable bindable) {
+		return subNextButton1.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToSubPrev1Button(HardwareBindable bindable) {
+		return subPrevButton1.pressedAction().setBinding(bindable);
+	}
+
 	private void initValueMatchers() {
 		pbKnob.setAdjustValueMatcher(midiIn.createAbsolutePitchBendValueMatcher(channel));
 
@@ -78,6 +91,9 @@ public class OTMidiHardwareControls {
 		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 49));
 		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
 		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
+
+		subPrevButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
+		subNextButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
 	}
 
 	private String createId(String name) {
