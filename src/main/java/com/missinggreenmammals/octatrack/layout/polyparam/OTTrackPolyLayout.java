@@ -4,7 +4,6 @@ import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.CursorDevice;
 import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
-import com.bitwig.extension.controller.api.PinnableCursorDevice;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
@@ -14,14 +13,11 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 
 	protected Track track;
 	protected final CursorTrack cursorTrack;
-	protected final PinnableCursorDevice cursorDevice;
 
-	public OTTrackPolyLayout(ControllerHost host, TrackBank trackBank, CursorTrack cursorTrack,
-			PinnableCursorDevice cursorDevice) {
+	public OTTrackPolyLayout(ControllerHost host, TrackBank trackBank, CursorTrack cursorTrack) {
 
 		super(host, trackBank);
 		this.cursorTrack = cursorTrack;
-		this.cursorDevice = cursorDevice;
 	}
 
 	@Override
@@ -41,13 +37,13 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		controls.getCcKnobs()[3].setBinding(track.pan());
 
 		// remotes
+		final CursorDevice cursorDevice = track.createCursorDevice("Primary");
 		final CursorRemoteControlsPage trackRemotesPage = track
 				.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), 6, null);
 
 		final CursorRemoteControlsPage deviceRemotesPage = cursorDevice
 				.createCursorRemoteControlsPage("device-remotes-" + (controls.getTrackNumber() - 1), 6, null);
 
-		final CursorDevice cursorDevice = track.createCursorDevice("Primary");
 		initForDeviceRemotes(controls, deviceRemotesPage, cursorDevice);
 	}
 

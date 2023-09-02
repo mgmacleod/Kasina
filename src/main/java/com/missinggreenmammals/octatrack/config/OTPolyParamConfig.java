@@ -1,11 +1,9 @@
 package com.missinggreenmammals.octatrack.config;
 
 import com.bitwig.extension.controller.api.ControllerHost;
-import com.bitwig.extension.controller.api.CursorDeviceFollowMode;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.MasterTrack;
-import com.bitwig.extension.controller.api.PinnableCursorDevice;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.octatrack.layout.polyparam.OTMasterPolyLayout;
@@ -16,14 +14,11 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 
 	protected TrackBank trackBank;
 	protected CursorTrack cursorTrack;
-	protected PinnableCursorDevice cursorDevice;
 	protected MasterTrack masterTrack;
 
 	public OTPolyParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
 		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
-		cursorDevice = cursorTrack.createCursorDevice("OT_CURSOR_DEVICE", "Cursor Device", 0,
-				CursorDeviceFollowMode.FOLLOW_SELECTION);
 		masterTrack = host.createMasterTrack(0);
 
 		trackBank.followCursorTrack(cursorTrack);
@@ -36,7 +31,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 			tracks[i] = new OTMidiTrack("TRACK" + track, channel, track, host, hardwareSurface) {
 				@Override
 				protected OTMidiTrackLayout createLayout(ControllerHost host) {
-					return new OTTrackPolyLayout(host, trackBank, cursorTrack, cursorDevice);
+					return new OTTrackPolyLayout(host, trackBank, cursorTrack);
 				}
 			};
 
