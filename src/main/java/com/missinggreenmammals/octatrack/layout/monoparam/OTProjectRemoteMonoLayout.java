@@ -6,12 +6,12 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.Track;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
-public class OTProjectRemoteLayout extends OTProjectLayout {
+public class OTProjectRemoteMonoLayout extends OTProjectMonoLayout {
 
 	protected final Track rootTrackGroup;
 	protected final CursorRemoteControlsPage controlsPage;
 
-	public OTProjectRemoteLayout(ControllerHost host) {
+	public OTProjectRemoteMonoLayout(ControllerHost host) {
 		super(host);
 
 		rootTrackGroup = project.getRootTrackGroup();

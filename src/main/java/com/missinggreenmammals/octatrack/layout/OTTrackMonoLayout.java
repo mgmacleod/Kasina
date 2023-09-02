@@ -5,10 +5,10 @@ import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 import com.missinggreenmammals.octatrack.layout.monoparam.OTMonoParamLayout;
 
-public abstract class OTTrackLayout extends OTMonoParamLayout {
+public abstract class OTTrackMonoLayout extends OTMonoParamLayout {
 	protected final TrackBank trackBank;
 
-	public OTTrackLayout(ControllerHost host) {
+	public OTTrackMonoLayout(ControllerHost host) {
 		super(host);
 		trackBank = createTrackBank(host);
 	}
