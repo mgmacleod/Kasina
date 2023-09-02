@@ -26,16 +26,4 @@ public abstract class OTMidiTrack {
 
 	protected abstract OTTransportLayout createConfig(ControllerHost host);
 
-//	protected abstract void setBindings(ControllerHost host);
-
-//	private void initButtons(final int channel, final ControllerHost host, HardwareSurface hardwareSurface) {
-//		final HardwareButton playButton = hardwareSurface.createHardwareButton(createId("PLAY"));
-//		final HardwareButton stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
-//		final Transport transport = host.createTransport();
-//		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 48));
-//		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
-//		playButton.pressedAction().setBinding(transport.playAction());
-//		stopButton.pressedAction().setBinding(transport.stopAction());
-//
-//	}
 }

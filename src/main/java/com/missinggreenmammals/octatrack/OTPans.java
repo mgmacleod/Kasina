@@ -2,8 +2,8 @@ package com.missinggreenmammals.octatrack;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.octatrack.layout.OTPanLayout;
 import com.missinggreenmammals.octatrack.layout.OTTransportLayout;
+import com.missinggreenmammals.octatrack.layout.monoparam.OTPanLayout;
 
 public class OTPans extends OTMidiTrack {
 
