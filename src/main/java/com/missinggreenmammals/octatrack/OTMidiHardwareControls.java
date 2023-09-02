@@ -27,7 +27,6 @@ public class OTMidiHardwareControls {
 	protected final HardwareButton cursorDevicePrevButton;
 	protected final HardwareButton cursorDeviceNextButton;
 	protected final HardwareButton remoteModeButton;
-	protected final HardwareButton selectDeviceButton;
 
 	protected final MidiIn midiIn;
 	protected final MidiOut midiOut;
@@ -61,7 +60,6 @@ public class OTMidiHardwareControls {
 		cursorDevicePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
 		cursorDeviceNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
 		remoteModeButton = hardwareSurface.createHardwareButton(createId("REMOTE_MODE"));
-		selectDeviceButton= hardwareSurface.createHardwareButton(createId("DEVICE_SELECT"));
 		initValueMatchers();
 
 	}
@@ -106,14 +104,9 @@ public class OTMidiHardwareControls {
 		return selectTrackButton.pressedAction().setBinding(bindable);
 	}
 	
-	public HardwareActionBinding bindToSelectDeviceButton(HardwareBindable bindable) {
-		return selectDeviceButton.pressedAction().setBinding(bindable);
-	}
-	
 	public void clearCursorDeviceButtonBindings() {
 		cursorDeviceNextButton.pressedAction().clearBindings();
 		cursorDevicePrevButton.pressedAction().clearBindings();
-		selectDeviceButton.pressedAction().clearBindings();
 	}
 
 	private void initValueMatchers() {
@@ -135,7 +128,6 @@ public class OTMidiHardwareControls {
 		cursorDevicePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
 		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
 		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
-		selectDeviceButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 63));
 	}
 
 	private String createId(String name) {
