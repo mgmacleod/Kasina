@@ -3,8 +3,12 @@ package com.missinggreenmammals.octatrack;
 import com.bitwig.extension.controller.ControllerExtension;
 import com.bitwig.extension.controller.ControllerExtensionDefinition;
 import com.bitwig.extension.controller.api.ControllerHost;
+import com.bitwig.extension.controller.api.DocumentState;
+import com.bitwig.extension.controller.api.SettableEnumValue;
 
 public class OctatrackExtension extends ControllerExtension {
+
+
 
 	private Octatrack octatrack;
 
@@ -16,8 +20,12 @@ public class OctatrackExtension extends ControllerExtension {
 	public void init() {
 		final ControllerHost host = getHost();
 		host.showPopupNotification("Octatrack Initialized");
+		
+		final DocumentState documentState = host.getDocumentState();
+		final SettableEnumValue configTypeSetting = documentState.getEnumSetting("Type", "Configuration",
+				Octatrack.CONFIG_TYPE_OPTIONS, Octatrack.CONFIG_TYPE_OPTIONS[0]);
 
-		octatrack = new Octatrack(host);
+		octatrack = new Octatrack(host, configTypeSetting);
 	}
 
 	@Override
@@ -27,7 +35,6 @@ public class OctatrackExtension extends ControllerExtension {
 
 	@Override
 	public void flush() {
-		octatrack.updateCCs();
 	}
 
 }

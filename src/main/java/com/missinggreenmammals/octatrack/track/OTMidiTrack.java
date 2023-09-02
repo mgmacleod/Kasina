@@ -1,7 +1,8 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.track;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
+import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 import com.missinggreenmammals.octatrack.layout.OTTransportLayout;
 
 public abstract class OTMidiTrack {
