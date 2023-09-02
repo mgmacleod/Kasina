@@ -113,6 +113,7 @@ public class OTMidiHardwareControls {
 	public void clearCursorDeviceButtonBindings() {
 		cursorDeviceNextButton.pressedAction().clearBindings();
 		cursorDevicePrevButton.pressedAction().clearBindings();
+		selectDeviceButton.pressedAction().clearBindings();
 	}
 
 	private void initValueMatchers() {
