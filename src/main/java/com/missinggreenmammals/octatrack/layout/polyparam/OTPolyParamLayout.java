@@ -18,11 +18,8 @@ public abstract class OTPolyParamLayout extends OTTransportLayout {
 	public void applyTo(OTMidiHardwareControls controls) {
 		super.applyTo(controls);
 
-//		controls.bindToPrevButton(trackBank.scrollPageBackwardsAction());
-//		controls.bindToNextButton(trackBank.scrollPageForwardsAction());
-
-		controls.bindToPrevButton(trackBank.scrollBackwardsAction());
-		controls.bindToNextButton(trackBank.scrollForwardsAction());
+		controls.bindToPrevButton(trackBank.scrollPageBackwardsAction());
+		controls.bindToNextButton(trackBank.scrollPageForwardsAction());
 	}
 
 }
