@@ -5,6 +5,7 @@ import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.MasterTrack;
 import com.bitwig.extension.controller.api.TrackBank;
+import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.octatrack.layout.polyparam.OTMasterPolyLayout;
 import com.missinggreenmammals.octatrack.layout.polyparam.OTTrackPolyLayout;
@@ -28,10 +29,12 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 		int channel = 8;
 
 		for (int i = 0; i < tracks.length - 1; i++) {
-			tracks[i] = new OTMidiTrack("TRACK" + track, channel, track, host, hardwareSurface) {
+			OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+
+			tracks[i] = new OTMidiTrack("TRACK" + track, controls, host, hardwareSurface) {
 				@Override
 				protected OTMidiTrackLayout createLayout(ControllerHost host) {
-					return new OTTrackPolyLayout(host, trackBank, cursorTrack);
+					return new OTTrackPolyLayout(host, trackBank, cursorTrack, controls);
 				}
 			};
 
@@ -40,7 +43,11 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 		}
 
 		// master track
-		tracks[7] = new OTMidiTrack("MasterTrack", 15, 8, host, hardwareSurface) {
+		track = 8;
+		channel = 15;
+		OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+
+		tracks[7] = new OTMidiTrack("MasterTrack", controls, host, hardwareSurface) {
 			@Override
 			protected OTMidiTrackLayout createLayout(ControllerHost host) {
 				return new OTMasterPolyLayout(host, trackBank, masterTrack);
