@@ -8,8 +8,6 @@ import com.bitwig.extension.controller.api.SettableEnumValue;
 
 public class OctatrackExtension extends ControllerExtension {
 
-
-
 	private Octatrack octatrack;
 
 	protected OctatrackExtension(ControllerExtensionDefinition definition, ControllerHost host) {

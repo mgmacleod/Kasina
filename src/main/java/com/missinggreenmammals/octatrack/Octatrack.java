@@ -4,7 +4,7 @@ import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.SettableEnumValue;
 import com.missinggreenmammals.octatrack.config.OTMidiConfiguration;
-import com.missinggreenmammals.octatrack.config.OTMonoParamConfig;
+import com.missinggreenmammals.octatrack.config.OTPolyParamConfig;
 
 public class Octatrack {
 	public static final String[] CONFIG_TYPE_OPTIONS = { "Single", "Multi" };
@@ -16,7 +16,7 @@ public class Octatrack {
 	public Octatrack(ControllerHost host, SettableEnumValue configTypeSetting) {
 		this.host = host;
 		hardwareSurface = host.createHardwareSurface();
-		config = new OTMonoParamConfig(host, hardwareSurface);
+		config = new OTPolyParamConfig(host, hardwareSurface);
 	}
 
 //	public void updateConfigType(final String type) {
