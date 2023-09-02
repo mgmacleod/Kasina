@@ -47,8 +47,8 @@ public class OTMasterPolyLayout extends OTPolyParamLayout {
 			knob.setBinding(bindable);
 		}
 
-		controls.bindToSubPrev1Button(controlsPage.selectPreviousAction());
-		controls.bindToSubNext1Button(controlsPage.selectNextAction());
+		controls.bindToRemotePagePrevButton(controlsPage.selectPreviousAction());
+		controls.bindToRemotePageNextButton(controlsPage.selectNextAction());
 	}
 
 }

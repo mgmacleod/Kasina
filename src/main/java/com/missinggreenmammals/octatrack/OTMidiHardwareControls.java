@@ -21,10 +21,11 @@ public class OTMidiHardwareControls {
 	protected final HardwareButton stopButton;
 	protected final HardwareButton prevButton;
 	protected final HardwareButton nextButton;
-	protected final HardwareButton subPrevButton1;
-	protected final HardwareButton subNextButton1;
-	protected final HardwareButton subPrevButton2;
-	protected final HardwareButton subNextButton2;
+	protected final HardwareButton selectTrackButton;
+	protected final HardwareButton remotePagePrevButton;
+	protected final HardwareButton remotePageNextButton;
+	protected final HardwareButton cursorDevicePrevButton;
+	protected final HardwareButton cursorDeviceNextButton;
 	protected final HardwareButton remoteModeButton;
 
 	protected final MidiIn midiIn;
@@ -52,10 +53,12 @@ public class OTMidiHardwareControls {
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
 		nextButton = hardwareSurface.createHardwareButton(createId("NEXT"));
-		subPrevButton1 = hardwareSurface.createHardwareButton(createId("SUB_PREV1"));
-		subNextButton1 = hardwareSurface.createHardwareButton(createId("SUB_NEXT1"));
-		subPrevButton2 = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
-		subNextButton2 = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
+		selectTrackButton = hardwareSurface.createHardwareButton(createId("TRACK_SELECT"));
+
+		remotePagePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV1"));
+		remotePageNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT1"));
+		cursorDevicePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
+		cursorDeviceNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
 		remoteModeButton = hardwareSurface.createHardwareButton(createId("REMOTE_MODE"));
 
 		initValueMatchers();
@@ -78,24 +81,33 @@ public class OTMidiHardwareControls {
 		return prevButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToSubNext1Button(HardwareBindable bindable) {
-		return subNextButton1.pressedAction().setBinding(bindable);
+	public HardwareActionBinding bindToRemotePageNextButton(HardwareBindable bindable) {
+		return remotePageNextButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToSubPrev1Button(HardwareBindable bindable) {
-		return subPrevButton1.pressedAction().setBinding(bindable);
+	public HardwareActionBinding bindToRemotePagePrevButton(HardwareBindable bindable) {
+		return remotePagePrevButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToSubNext2Button(HardwareBindable bindable) {
-		return subNextButton2.pressedAction().setBinding(bindable);
+	public HardwareActionBinding bindToCursorDeviceNextButton(HardwareBindable bindable) {
+		return cursorDeviceNextButton.pressedAction().setBinding(bindable);
 	}
 
-	public HardwareActionBinding bindToSubPrev2Button(HardwareBindable bindable) {
-		return subPrevButton2.pressedAction().setBinding(bindable);
+	public HardwareActionBinding bindToCursorDevicePrevButton(HardwareBindable bindable) {
+		return cursorDevicePrevButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToRemoteModeButton(HardwareBindable bindable) {
 		return remoteModeButton.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToSelectTrackButton(HardwareBindable bindable) {
+		return selectTrackButton.pressedAction().setBinding(bindable);
+	}
+	
+	public void clearCursorDeviceButtonBindings() {
+		cursorDeviceNextButton.pressedAction().clearBindings();
+		cursorDevicePrevButton.pressedAction().clearBindings();
 	}
 
 	private void initValueMatchers() {
@@ -110,10 +122,12 @@ public class OTMidiHardwareControls {
 		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
 		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
 
-		subPrevButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
-		subNextButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
-		subPrevButton2.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
-		subNextButton2.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
+		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
+
+		remotePagePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
+		remotePageNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
+		cursorDevicePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
+		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
 		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
 	}
 

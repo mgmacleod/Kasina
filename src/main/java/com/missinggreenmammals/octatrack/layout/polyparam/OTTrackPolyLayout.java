@@ -6,7 +6,6 @@ import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.CursorDevice;
 import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
-import com.bitwig.extension.controller.api.HardwareActionBindable;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
@@ -15,13 +14,14 @@ import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
 public class OTTrackPolyLayout extends OTPolyParamLayout {
 
-	protected Track track;
+	protected final Track track;
 	protected final CursorTrack cursorTrack;
-	private HardwareActionBindable remoteModeChangeAction;
-	private HardwareBindable trackRemotePagePrevAction;
-	private HardwareBindable trackRemotePageNextAction;
-	private HardwareBindable deviceRemotePagePrevAction;
-	private HardwareBindable deviceRemotePageNextAction;
+	private final HardwareBindable remoteModeChangeAction;
+	private final HardwareBindable selectTrackAction;
+	private final HardwareBindable trackRemotePagePrevAction;
+	private final HardwareBindable trackRemotePageNextAction;
+	private final HardwareBindable deviceRemotePagePrevAction;
+	private final HardwareBindable deviceRemotePageNextAction;
 	private HardwareBindable cursorDevicePagePrevAction;
 	private HardwareBindable cursorDevicePageNextAction;
 
@@ -39,6 +39,7 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		this.cursorTrack = cursorTrack;
 		track = trackBank.getItemAt(controls.getTrackNumber() - 1);
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
+		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
 
 		trackRemoteMode = new AtomicBoolean(true);
 		cursorDevice = track.createCursorDevice("Primary");
@@ -94,8 +95,11 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		// remotes
 		controls.bindToRemoteModeButton(remoteModeChangeAction);
 
-		// default to track mode
+		// default to track remote mode
 		initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
+		
+		// select track
+		controls.bindToSelectTrackButton(selectTrackAction);
 	}
 
 
@@ -108,8 +112,9 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		controls.getCcKnobs()[8].setBinding(controlsPage.getParameter(4));
 		controls.getCcKnobs()[9].setBinding(controlsPage.getParameter(5));
 
-		controls.bindToSubPrev1Button(selectPrevAction);
-		controls.bindToSubNext1Button(selectNextAction);
+		controls.bindToRemotePagePrevButton(selectPrevAction);
+		controls.bindToRemotePageNextButton(selectNextAction);
+		controls.clearCursorDeviceButtonBindings(); // no devices to switch between in track mode
 	}
 
 	private void initForDeviceRemotes(final CursorRemoteControlsPage controlsPage,
@@ -117,7 +122,7 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 
 		initForTrackRemotes(controlsPage, deviceRemotePagePrevAction, deviceRemotePageNextAction);
 
-		controls.bindToSubPrev2Button(cursorDevicePagePrevAction);
-		controls.bindToSubNext2Button(cursorDevicePageNextAction);
+		controls.bindToCursorDevicePrevButton(cursorDevicePagePrevAction);
+		controls.bindToCursorDeviceNextButton(cursorDevicePageNextAction);
 	}
 }
