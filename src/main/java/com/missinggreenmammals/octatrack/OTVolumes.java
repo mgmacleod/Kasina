@@ -16,7 +16,7 @@ public class OTVolumes extends OTMidiTrack {
 	}
 
 	@Override
-	protected OTTransportLayout createConfig(ControllerHost host) {
+	protected OTTransportLayout createLayout(ControllerHost host) {
 		return new OTVolumeMonoLayout(host);
 	}
 

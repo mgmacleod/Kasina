@@ -17,7 +17,7 @@ public abstract class OTMonoParamLayout extends OTTransportLayout {
 		super.applyTo(controls);
 
 		for (int i = 0; i < PAGE_SIZE; i++) {
-			AbsoluteHardwareKnob knob = controls.getCcKnobs().get(i);
+			AbsoluteHardwareKnob knob = controls.getCcKnobs()[i];
 			knob.setBinding(getItemAt(i));
 		}
 	}

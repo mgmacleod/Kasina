@@ -1,8 +1,5 @@
 package com.missinggreenmammals.octatrack;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareActionBinding;
@@ -11,31 +8,14 @@ import com.bitwig.extension.controller.api.HardwareButton;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.MidiOut;
+import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
 
 public class OTMidiHardwareControls {
-	public static final int CC1 = 7;
-	public static final int CC2 = 1;
-	public static final int CC3 = 2;
-	public static final int CC4 = 10;
-	public static final int CC5 = 71;
-	public static final int CC6 = 72;
-	public static final int CC7 = 73;
-	public static final int CC8 = 74;
-	public static final int CC9 = 75;
-	public static final int CC10 = 76;
+	private static final int[] CC_NUMS = { 7, 1, 2, 10, 71, 72, 73, 74, 75, 76 };
+//	private static final int[] BUTTON_NUMS = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58 };
 
 	protected final AbsoluteHardwareKnob pbKnob;
-	protected final AbsoluteHardwareKnob cc1knob;
-	protected final AbsoluteHardwareKnob cc2knob;
-	protected final AbsoluteHardwareKnob cc3knob;
-	protected final AbsoluteHardwareKnob cc4knob;
-	protected final AbsoluteHardwareKnob cc5knob;
-	protected final AbsoluteHardwareKnob cc6knob;
-	protected final AbsoluteHardwareKnob cc7knob;
-	protected final AbsoluteHardwareKnob cc8knob;
-	protected final AbsoluteHardwareKnob cc9knob;
-	protected final AbsoluteHardwareKnob cc10knob;
-	protected List<AbsoluteHardwareKnob> ccKnobs;
+	protected AbsoluteHardwareKnob[] ccKnobs;
 
 	protected final HardwareButton playButton;
 	protected final HardwareButton stopButton;
@@ -56,19 +36,11 @@ public class OTMidiHardwareControls {
 		this.trackNumber = trackNumber;
 
 		pbKnob = hardwareSurface.createAbsoluteHardwareKnob(createId("PB"));
-		cc1knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC1"));
-		cc2knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC2"));
-		cc3knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC3"));
-		cc4knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC4"));
-		cc5knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC5"));
-		cc6knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC6"));
-		cc7knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC7"));
-		cc8knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC8"));
-		cc9knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC9"));
-		cc10knob = hardwareSurface.createAbsoluteHardwareKnob(createId("CC10"));
+		ccKnobs = new AbsoluteHardwareKnob[OTMidiTrackLayout.PAGE_SIZE];
 
-		ccKnobs = Arrays.asList(cc1knob, cc2knob, cc3knob, cc4knob, cc5knob, cc6knob, cc7knob, cc8knob, cc9knob,
-				cc10knob);
+		for (int i = 0; i < OTMidiTrackLayout.PAGE_SIZE; i++) {
+			ccKnobs[i] = hardwareSurface.createAbsoluteHardwareKnob(createId("CC" + (i + 1)));
+		}
 
 		playButton = hardwareSurface.createHardwareButton(createId("PLAY"));
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
@@ -97,29 +69,31 @@ public class OTMidiHardwareControls {
 
 	private void initValueMatchers() {
 		pbKnob.setAdjustValueMatcher(midiIn.createAbsolutePitchBendValueMatcher(channel));
-		cc1knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC1));
-		cc2knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC2));
-		cc3knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC3));
-		cc4knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC4));
-		cc5knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC5));
-		cc6knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC6));
-		cc7knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC7));
-		cc8knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC8));
-		cc9knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC9));
-		cc10knob.setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC10));
+
+		for (int i = 0; i < ccKnobs.length; i++) {
+			ccKnobs[i].setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC_NUMS[i]));
+		}
 
 		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 48));
-		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
-
-		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 52));
-		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 53));
+		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 49));
+		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
+		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
 	}
 
 	private String createId(String name) {
 		return String.format("OT_MIDI_%d_%d_%s", trackNumber, channel, name);
 	}
 
-	public List<AbsoluteHardwareKnob> getCcKnobs() {
+	public AbsoluteHardwareKnob[] getCcKnobs() {
 		return ccKnobs;
 	}
+
+	public int getChannel() {
+		return channel;
+	}
+
+	public int getTrackNumber() {
+		return trackNumber;
+	}
+
 }

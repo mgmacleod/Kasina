@@ -10,7 +10,7 @@ public abstract class OTMidiTrack {
 	protected final HardwareSurface hardwareSurface;
 	protected final ControllerHost host;
 	protected final OTMidiHardwareControls controls;
-	protected final OTTransportLayout config;
+	protected final OTTransportLayout layout;
 
 	public OTMidiTrack(final String name, final int channel, final int trackNumber, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
@@ -20,10 +20,10 @@ public abstract class OTMidiTrack {
 		this.hardwareSurface = hardwareSurface;
 
 		controls = new OTMidiHardwareControls(channel, trackNumber, host, hardwareSurface);
-		config = createConfig(host);
-		config.applyTo(controls);
+		layout = createLayout(host);
+		layout.applyTo(controls);
 	}
 
-	protected abstract OTTransportLayout createConfig(ControllerHost host);
+	protected abstract OTTransportLayout createLayout(ControllerHost host);
 
 }

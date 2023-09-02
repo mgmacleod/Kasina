@@ -11,7 +11,7 @@ public abstract class OTMainTrackMonoLayout extends OTTrackMonoLayout {
 
 	@Override
 	protected TrackBank createTrackBank(ControllerHost host) {
-		return host.createMainTrackBank(PAGE_SIZE, 0, 0);
+		return host.createMainTrackBank(PAGE_SIZE, 2, 0);
 	}
 
 }

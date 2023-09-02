@@ -20,5 +20,9 @@ public abstract class OTTrackMonoLayout extends OTMonoParamLayout {
 
 		controls.bindToPrevButton(trackBank.scrollPageBackwardsAction());
 		controls.bindToNextButton(trackBank.scrollPageForwardsAction());
+
+//		SendBank sendBank = trackBank.getItemAt(0).sendBank();
+//		sendBank.exists();
+
 	}
 }
