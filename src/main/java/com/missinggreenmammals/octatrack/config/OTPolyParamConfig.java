@@ -33,9 +33,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 		int channel = 8;
 
 		for (int i = 0; i < tracks.length - 1; i++) {
-
 			tracks[i] = new OTMidiTrack("TRACK" + track, channel, track, host, hardwareSurface) {
-
 				@Override
 				protected OTMidiTrackLayout createLayout(ControllerHost host) {
 					return new OTTrackPolyLayout(host, trackBank, cursorTrack, cursorDevice);
@@ -48,7 +46,6 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 
 		// master track
 		tracks[7] = new OTMidiTrack("MasterTrack", 15, 8, host, hardwareSurface) {
-
 			@Override
 			protected OTMidiTrackLayout createLayout(ControllerHost host) {
 				return new OTMasterPolyLayout(host, trackBank, masterTrack);

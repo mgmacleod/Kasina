@@ -23,6 +23,9 @@ public class OTMidiHardwareControls {
 	protected final HardwareButton nextButton;
 	protected final HardwareButton subPrevButton1;
 	protected final HardwareButton subNextButton1;
+	protected final HardwareButton subPrevButton2;
+	protected final HardwareButton subNextButton2;
+	protected final HardwareButton remoteModeButton;
 
 	protected final MidiIn midiIn;
 	protected final MidiOut midiOut;
@@ -51,6 +54,9 @@ public class OTMidiHardwareControls {
 		nextButton = hardwareSurface.createHardwareButton(createId("NEXT"));
 		subPrevButton1 = hardwareSurface.createHardwareButton(createId("SUB_PREV1"));
 		subNextButton1 = hardwareSurface.createHardwareButton(createId("SUB_NEXT1"));
+		subPrevButton2 = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
+		subNextButton2 = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
+		remoteModeButton = hardwareSurface.createHardwareButton(createId("REMOTE_MODE"));
 
 		initValueMatchers();
 
@@ -80,6 +86,18 @@ public class OTMidiHardwareControls {
 		return subPrevButton1.pressedAction().setBinding(bindable);
 	}
 
+	public HardwareActionBinding bindToSubNext2Button(HardwareBindable bindable) {
+		return subNextButton2.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToSubPrev2Button(HardwareBindable bindable) {
+		return subPrevButton2.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToRemoteModeButton(HardwareBindable bindable) {
+		return remoteModeButton.pressedAction().setBinding(bindable);
+	}
+
 	private void initValueMatchers() {
 		pbKnob.setAdjustValueMatcher(midiIn.createAbsolutePitchBendValueMatcher(channel));
 
@@ -94,6 +112,9 @@ public class OTMidiHardwareControls {
 
 		subPrevButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
 		subNextButton1.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
+		subPrevButton2.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
+		subNextButton2.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
+		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
 	}
 
 	private String createId(String name) {
