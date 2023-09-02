@@ -1,9 +1,8 @@
-package com.missinggreenmammals.octatrack.layout;
+package com.missinggreenmammals.octatrack.layout.monoparam;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
-import com.missinggreenmammals.octatrack.layout.monoparam.OTMonoParamLayout;
 
 public abstract class OTTrackMonoLayout extends OTMonoParamLayout {
 	protected final TrackBank trackBank;
