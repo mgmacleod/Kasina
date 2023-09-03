@@ -1,4 +1,5 @@
 # 1-finish-basic-mapping-options Dev Log
+[github](https://github.com/mgmacleod/MissedByGreenMammals/issues/1)
 
 ## Conditional mapping for remote controls (dynamically switch between track and device remotes)
 - I want to change the bindings of a set of CC knobs (Ctrl2) based on the state of a 'button' that sends note on/off events
@@ -18,6 +19,3 @@
 - need to be careful about accessing the `HardwareBindable` instances
   - they can only be accessed during initialization
   - current solution is to access and store them during init and then set them on the appropriate hardware controls when the above function is called (when it, in turn, is called from the hardware button press)
-
-## Track Selection
-- Is there a way to select
