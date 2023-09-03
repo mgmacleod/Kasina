@@ -20,5 +20,6 @@ Controls not currently used:
     - question then becomes, how should shift functions work?
 - the yes and no buttons transmit MIDI
   - but they probably can't be used without impacting functionality on the audio side
-- the scene keys and the crossfader
-  - crossfader transmits CC 
+- the scene select keys and the crossfader transmit and receive on channel 1
+  - something scene-like should be possible with the Hardware API and CC modulators: [further exploration](ot-scenes-for-bitwig.md)
+    - won't be pretty, but might be workable
