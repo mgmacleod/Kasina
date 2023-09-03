@@ -112,25 +112,26 @@ public class OTMidiHardwareControls {
 	}
 
 	private void initValueMatchers() {
+		final String expression = createAftertouchExpression();
 		pbKnob.setAdjustValueMatcher(midiIn.createAbsolutePitchBendValueMatcher(channel));
-		atKnob.setAdjustValueMatcher(midiIn.createAbsoluteValueMatcher(createAftertouchExpression(), "data1", 7));
+		atKnob.setAdjustValueMatcher(midiIn.createAbsoluteValueMatcher(expression, "data1", 7));
 
 		for (int i = 0; i < ccKnobs.length; i++) {
 			ccKnobs[i].setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC_NUMS[i]));
 		}
 
-		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 48));
-		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 49));
-		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
-		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
+		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
+		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 61));
+		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 62));
+		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 63));
+
+		remotePagePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 48));
+		remotePageNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 49));
+		cursorDevicePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
+		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
+		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 52));
 
 		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
-
-		remotePagePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
-		remotePageNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
-		cursorDevicePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
-		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
-		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
 	}
 
 	private String createId(String name) {

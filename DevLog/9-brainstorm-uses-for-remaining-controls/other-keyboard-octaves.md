@@ -1,0 +1,13 @@
+# Other octaves of the chromatic keyboard
+- when in chromatic mode, the trigs can range over several octaves
+  - everything so far assumes its set at 3 on the OT
+- use of other octaves is complicated by the fact that we have 12 'tones' in the octave and 16 trig keys to use
+  - so changing octaves doesn't move things by a full page of trig keys
+- in any case, it might be a nice way to hide away lesser used / more disruptive settings or actions
+  - all the performance stuff is up front
+  - other 'admin' type things hidden on other 'pages' 
+- one idea here would be to divide the trig keys into to 'sections'
+  - keys 1-12 are assigned to things that are relative to the current track for sure, but possibly also relative to the octave of the keyboard as well
+  - the other section would be fixed I guess and only do global things
+    - which currently would be only play, stop, track bank prev, track bank next
+  - I like the physical arrangement and it leaves the door open to easier use of octaves later on as necessary/desired
