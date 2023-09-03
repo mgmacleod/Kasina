@@ -15,6 +15,7 @@ public class OTMidiHardwareControls {
 //	private static final int[] BUTTON_NUMS = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 };
 
 	protected final AbsoluteHardwareKnob pbKnob;
+	protected final AbsoluteHardwareKnob atKnob;
 	protected AbsoluteHardwareKnob[] ccKnobs;
 
 	protected final HardwareButton playButton;
@@ -43,6 +44,7 @@ public class OTMidiHardwareControls {
 		this.trackNumber = trackNumber;
 
 		pbKnob = hardwareSurface.createAbsoluteHardwareKnob(createId("PB"));
+		atKnob = hardwareSurface.createAbsoluteHardwareKnob(createId("AT"));
 		ccKnobs = new AbsoluteHardwareKnob[OTMidiTrackLayout.PAGE_SIZE];
 
 		for (int i = 0; i < OTMidiTrackLayout.PAGE_SIZE; i++) {
@@ -103,7 +105,7 @@ public class OTMidiHardwareControls {
 	public HardwareActionBinding bindToSelectTrackButton(HardwareBindable bindable) {
 		return selectTrackButton.pressedAction().setBinding(bindable);
 	}
-	
+
 	public void clearCursorDeviceButtonBindings() {
 		cursorDeviceNextButton.pressedAction().clearBindings();
 		cursorDevicePrevButton.pressedAction().clearBindings();
@@ -111,6 +113,7 @@ public class OTMidiHardwareControls {
 
 	private void initValueMatchers() {
 		pbKnob.setAdjustValueMatcher(midiIn.createAbsolutePitchBendValueMatcher(channel));
+		atKnob.setAdjustValueMatcher(midiIn.createAbsoluteValueMatcher(createAftertouchExpression(), "data1", 7));
 
 		for (int i = 0; i < ccKnobs.length; i++) {
 			ccKnobs[i].setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC_NUMS[i]));
@@ -133,9 +136,21 @@ public class OTMidiHardwareControls {
 	private String createId(String name) {
 		return String.format("OT_MIDI_%d_%d_%s", trackNumber, channel, name);
 	}
+	
+	private String createAftertouchExpression() {
+		return String.format("status == 0xD%s", Integer.toHexString(channel));
+	}
 
 	public AbsoluteHardwareKnob[] getCcKnobs() {
 		return ccKnobs;
+	}
+	
+	public AbsoluteHardwareKnob getAtKnob() {
+		return atKnob;
+	}
+	
+	public AbsoluteHardwareKnob getPbKnob() {
+		return pbKnob;
 	}
 
 	public int getChannel() {

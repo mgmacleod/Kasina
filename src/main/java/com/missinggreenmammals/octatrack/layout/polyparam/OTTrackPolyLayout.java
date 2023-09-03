@@ -13,6 +13,7 @@ import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
 public class OTTrackPolyLayout extends OTPolyParamLayout {
+	private static final int REMOTE_PAGE_SIZE = 8;
 
 	protected final Track track;
 	protected final CursorTrack cursorTrack;
@@ -44,11 +45,11 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		trackRemoteMode = new AtomicBoolean(true);
 		cursorDevice = track.createCursorDevice("Primary");
 		
-		trackRemotesPage = track.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), 6,
+		trackRemotesPage = track.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
 				null);
 
 		deviceRemotesPage = cursorDevice
-				.createCursorRemoteControlsPage("device-remotes-" + (controls.getTrackNumber() - 1), 6,
+				.createCursorRemoteControlsPage("device-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
 				null);
 		
 		// get binding targets
@@ -88,8 +89,8 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 
 		// Sends
 		SendBank sendBank = track.sendBank();
-		controls.getCcKnobs()[1].setBinding(sendBank.getItemAt(0));
-		controls.getCcKnobs()[2].setBinding(sendBank.getItemAt(1));
+		controls.getPbKnob().setBinding(sendBank.getItemAt(0));
+		controls.getAtKnob().setBinding(sendBank.getItemAt(1));
 
 		// pan
 		controls.getCcKnobs()[3].setBinding(track.pan());
@@ -107,12 +108,15 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 
 	private void initForTrackRemotes(final CursorRemoteControlsPage controlsPage,
 			final HardwareBindable selectPrevAction, final HardwareBindable selectNextAction) {
-		controls.getCcKnobs()[4].setBinding(controlsPage.getParameter(0));
-		controls.getCcKnobs()[5].setBinding(controlsPage.getParameter(1));
-		controls.getCcKnobs()[6].setBinding(controlsPage.getParameter(2));
-		controls.getCcKnobs()[7].setBinding(controlsPage.getParameter(3));
-		controls.getCcKnobs()[8].setBinding(controlsPage.getParameter(4));
-		controls.getCcKnobs()[9].setBinding(controlsPage.getParameter(5));
+		
+		controls.getCcKnobs()[1].setBinding(controlsPage.getParameter(0));
+		controls.getCcKnobs()[2].setBinding(controlsPage.getParameter(1));
+		controls.getCcKnobs()[4].setBinding(controlsPage.getParameter(2));
+		controls.getCcKnobs()[5].setBinding(controlsPage.getParameter(3));
+		controls.getCcKnobs()[6].setBinding(controlsPage.getParameter(4));
+		controls.getCcKnobs()[7].setBinding(controlsPage.getParameter(5));
+		controls.getCcKnobs()[8].setBinding(controlsPage.getParameter(6));
+		controls.getCcKnobs()[9].setBinding(controlsPage.getParameter(7));
 
 		controls.bindToRemotePagePrevButton(selectPrevAction);
 		controls.bindToRemotePageNextButton(selectNextAction);
