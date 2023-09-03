@@ -24,3 +24,13 @@ The basic idea here is to use the MIDI messages the OT can TX and RX about (1) t
 
 
 ### Options to bring slot A into the mix?
+- in code,
+  - send two signals for A and B
+    - values on A are inverted values from the current position (P) of the CF (i.e., `A = 1 - P`), or some such
+      - basically, when the CF is all the way to the A side, it should be fully activated
+  - The signal for A goes to whatever channel is associated with the scene assigned to A
+    - same for B, obv
+- in BW,
+  - modulator A receives the values for 1 - P and drives modulation accordingly
+  - modulator B receives the values for P and, uh, the same
+  - it's not full morphing, but it's not bad, at least conceptually 
