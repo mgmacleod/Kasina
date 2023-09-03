@@ -1,4 +1,4 @@
-# MbGM1 - Basic Functionality for the Octatrack
+# 1-finish-basic-mapping-options Dev Log
 
 ## Conditional mapping for remote controls (dynamically switch between track and device remotes)
 - I want to change the bindings of a set of CC knobs (Ctrl2) based on the state of a 'button' that sends note on/off events

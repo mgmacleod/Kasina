@@ -1,3 +1,3 @@
 # Dev Log
 
-[first ticket](./MbGM1/MbGM1-devlog.md)
+[first ticket](./1-finish-basic-mapping-options/1-finish-basic-mapping-options-devlog.md)
