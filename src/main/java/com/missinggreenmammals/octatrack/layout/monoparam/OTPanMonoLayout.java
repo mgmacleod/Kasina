@@ -1,11 +1,11 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.layout.monoparam;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 
-public class OTPanConfig extends OTMainTrackConfig {
+public class OTPanMonoLayout extends OTMainTrackMonoLayout {
 
-	public OTPanConfig(ControllerHost host) {
+	public OTPanMonoLayout(ControllerHost host) {
 		super(host);
 	}
 

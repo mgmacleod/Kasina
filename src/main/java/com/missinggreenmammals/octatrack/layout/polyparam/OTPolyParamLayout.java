@@ -1,17 +1,18 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.layout.polyparam;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.TrackBank;
+import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.octatrack.layout.OTTransportLayout;
 
-public abstract class OTTrackConfig extends OTConfiguration {
+public abstract class OTPolyParamLayout extends OTTransportLayout {
 	protected final TrackBank trackBank;
 
-	public OTTrackConfig(ControllerHost host) {
+	public OTPolyParamLayout(ControllerHost host, TrackBank trackBank) {
 		super(host);
-		trackBank = createTrackBank(host);
-	}
+		this.trackBank = trackBank;
 
-	protected abstract TrackBank createTrackBank(ControllerHost host);
+	}
 
 	@Override
 	public void applyTo(OTMidiHardwareControls controls) {
@@ -20,4 +21,5 @@ public abstract class OTTrackConfig extends OTConfiguration {
 		controls.bindToPrevButton(trackBank.scrollPageBackwardsAction());
 		controls.bindToNextButton(trackBank.scrollPageForwardsAction());
 	}
+
 }

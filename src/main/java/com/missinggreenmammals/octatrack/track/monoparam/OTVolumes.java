@@ -1,7 +1,10 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.octatrack.track.monoparam;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
+import com.missinggreenmammals.octatrack.layout.OTTransportLayout;
+import com.missinggreenmammals.octatrack.layout.monoparam.OTVolumeMonoLayout;
+import com.missinggreenmammals.octatrack.track.OTMidiTrack;
 
 public class OTVolumes extends OTMidiTrack {
 
@@ -14,8 +17,8 @@ public class OTVolumes extends OTMidiTrack {
 	}
 
 	@Override
-	protected OTConfiguration createConfig(ControllerHost host) {
-		return new OTVolumeConfig(host);
+	protected OTTransportLayout createLayout(ControllerHost host) {
+		return new OTVolumeMonoLayout(host);
 	}
 
 }
