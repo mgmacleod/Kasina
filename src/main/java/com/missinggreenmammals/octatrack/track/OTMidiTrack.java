@@ -25,19 +25,6 @@ public abstract class OTMidiTrack {
 		layout.applyTo(controls);
 	}
 
-	/**
-	 * @deprecated
-	 * @param name2
-	 * @param channel
-	 * @param trackNumber
-	 * @param host2
-	 * @param hardwareSurface2
-	 */
-	public OTMidiTrack(String name2, int channel, int trackNumber, ControllerHost host2,
-			HardwareSurface hardwareSurface2) {
-		this(name2, null, host2, hardwareSurface2);
-	}
-
 	protected abstract OTMidiTrackLayout createLayout(ControllerHost host);
 
 }
