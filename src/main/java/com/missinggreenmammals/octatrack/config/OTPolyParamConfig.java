@@ -29,11 +29,14 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 	protected MasterTrack masterTrack;
 	private final NoteInput noteInput;
 
-	private AtomicInteger asChannel, bsChannel;
+	private AtomicInteger asChannel;
+	private AtomicInteger bsChannel;
+	private AtomicInteger cfp;
 
 	public OTPolyParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
 		asChannel = new AtomicInteger(0);
 		bsChannel = new AtomicInteger(0);
+		cfp = new AtomicInteger(0);
 
 		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
@@ -88,19 +91,27 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 	public void handleRawMidi(final int statusByte, final int data1, final int data2) {
 		final ShortMidiMessage msg = new ShortMidiMessage(statusByte, data1, data2);
 
-		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == AS_CC_NUMBER) {
-			asChannel.set(msg.getData2());
+		if (!msg.isControlChange() || msg.getChannel() != CFP_CHANNEL) {
+			return;
 		}
 
-		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == BS_CC_NUMBER) {
-			bsChannel.set(msg.getData2());
+		if (data1 == AS_CC_NUMBER) {
+			final int asChannelOld = asChannel.getAndSet(data2);
+			noteInput.sendRawMidiEvent(asChannelOld + BASE_CFP_STATUS, 0, 0);
+			noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
 		}
 
-		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == CFP_CC_NUMBER) {
-			int asStatus = asChannel.get() + BASE_CFP_STATUS;
-			int bsStatus = bsChannel.get() + BASE_CFP_STATUS;
-			noteInput.sendRawMidiEvent(asStatus, 0, 127 - data2);
-			noteInput.sendRawMidiEvent(bsStatus, 0, data2);
+		if (data1 == BS_CC_NUMBER) {
+			final int bsChannelOld = bsChannel.getAndSet(data2);
+			noteInput.sendRawMidiEvent(bsChannelOld + BASE_CFP_STATUS, 0, 0);
+			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
+		}
+
+		if (data1 == CFP_CC_NUMBER) {
+			cfp.set(data2);
+			noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - data2);
+			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, data2);
+
 		}
 	}
 
