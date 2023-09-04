@@ -1,4 +1,4 @@
-package com.missinggreenmammals.octatrack.layout.polyparam;
+package com.missinggreenmammals.octatrack.layout;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
@@ -7,11 +7,11 @@ import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
-public class OTMasterPolyLayout extends OTTrackPolyLayout {
+public class OTMasterTrackLayout extends OTRegularTrackLayout {
 
 	protected Track rootTrackGroup;
 
-	public OTMasterPolyLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
+	public OTMasterTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
 			OTMidiHardwareControls controls) {
 
 		super(host, trackBank, track, cursorTrack, controls);

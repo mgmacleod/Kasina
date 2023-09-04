@@ -14,26 +14,15 @@ public class OctatrackExtension extends ControllerExtension {
 
 	@Override
 	public void init() {
-		final ControllerHost host = getHost();
-		host.showPopupNotification("Octatrack Initialized");
-
-//		host.getMidiInPort(0).setMidiCallback(this::handleMidi);
-
-		octatrack = new Octatrack(host);
+		octatrack = new Octatrack(getHost());
 	}
 
 	@Override
 	public void exit() {
-		getHost().showPopupNotification("Octatrack Exited");
 	}
 
 	@Override
 	public void flush() {
 	}
-
-//	public void handleMidi(final int statusByte, final int data1, final int data2) {
-//		final ShortMidiMessage msg = new ShortMidiMessage(statusByte, data1, data2);
-//		getHost().println(msg.toString());
-//	}
 
 }

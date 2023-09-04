@@ -12,12 +12,12 @@ import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.octatrack.layout.OTMasterTrackLayout;
 import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
-import com.missinggreenmammals.octatrack.layout.polyparam.OTMasterPolyLayout;
-import com.missinggreenmammals.octatrack.layout.polyparam.OTTrackPolyLayout;
+import com.missinggreenmammals.octatrack.layout.OTRegularTrackLayout;
 import com.missinggreenmammals.octatrack.track.OTMidiTrack;
 
-public class OTPolyParamConfig extends OTMidiConfiguration {
+public class OTDefaultParamConfig extends OTMidiConfiguration {
 
 	private static final int CFP_CHANNEL = 0;
 	private static final int CFP_CC_NUMBER = 48;
@@ -33,7 +33,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 	private AtomicInteger bsChannel;
 	private AtomicInteger cfp;
 
-	public OTPolyParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
+	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
 		asChannel = new AtomicInteger(0);
 		bsChannel = new AtomicInteger(0);
 		cfp = new AtomicInteger(0);
@@ -65,7 +65,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 			tracks[i] = new OTMidiTrack("TRACK" + track, controls, host, hardwareSurface) {
 				@Override
 				protected OTMidiTrackLayout createLayout(ControllerHost host) {
-					return new OTTrackPolyLayout(host, trackBank, bwTrack, cursorTrack, controls);
+					return new OTRegularTrackLayout(host, trackBank, bwTrack, cursorTrack, controls);
 				}
 			};
 
@@ -82,7 +82,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 		tracks[7] = new OTMidiTrack("MasterTrack", controls, host, hardwareSurface) {
 			@Override
 			protected OTMidiTrackLayout createLayout(ControllerHost host) {
-				return new OTMasterPolyLayout(host, trackBank, masterTrack, cursorTrack, controls);
+				return new OTMasterTrackLayout(host, trackBank, masterTrack, cursorTrack, controls);
 			}
 		};
 
