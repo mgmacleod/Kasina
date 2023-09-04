@@ -3,7 +3,7 @@ package com.missinggreenmammals.octatrack;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.missinggreenmammals.octatrack.config.OTMidiConfiguration;
-import com.missinggreenmammals.octatrack.config.OTPolyParamConfig;
+import com.missinggreenmammals.octatrack.config.OTDefaultParamConfig;
 
 public class Octatrack {
 
@@ -13,7 +13,7 @@ public class Octatrack {
 
 	public Octatrack(ControllerHost host) {
 		hardwareSurface = host.createHardwareSurface();
-		config = new OTPolyParamConfig(host, hardwareSurface);
+		config = new OTDefaultParamConfig(host, hardwareSurface);
 	}
 
 }

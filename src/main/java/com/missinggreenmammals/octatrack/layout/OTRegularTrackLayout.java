@@ -1,4 +1,4 @@
-package com.missinggreenmammals.octatrack.layout.polyparam;
+package com.missinggreenmammals.octatrack.layout;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -12,7 +12,7 @@ import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
-public class OTTrackPolyLayout extends OTPolyParamLayout {
+public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;
 
 	protected final Track track;
@@ -32,7 +32,7 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 	private final CursorRemoteControlsPage deviceRemotesPage;
 	private final OTMidiHardwareControls controls;
 
-	public OTTrackPolyLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
+	public OTRegularTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
 			OTMidiHardwareControls controls) {
 
 		super(host, trackBank);

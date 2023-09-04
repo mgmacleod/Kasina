@@ -14,14 +14,11 @@ public class OctatrackExtension extends ControllerExtension {
 
 	@Override
 	public void init() {
-		final ControllerHost host = getHost();
-		host.showPopupNotification("Octatrack Initialized");
-		octatrack = new Octatrack(host);
+		octatrack = new Octatrack(getHost());
 	}
 
 	@Override
 	public void exit() {
-		getHost().showPopupNotification("Octatrack Exited");
 	}
 
 	@Override
