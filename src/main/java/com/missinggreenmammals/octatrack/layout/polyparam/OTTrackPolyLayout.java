@@ -23,8 +23,8 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 	private final HardwareBindable trackRemotePageNextAction;
 	private final HardwareBindable deviceRemotePagePrevAction;
 	private final HardwareBindable deviceRemotePageNextAction;
-	private HardwareBindable cursorDevicePagePrevAction;
-	private HardwareBindable cursorDevicePageNextAction;
+	private final HardwareBindable cursorDevicePagePrevAction;
+	private final HardwareBindable cursorDevicePageNextAction;
 
 	private AtomicBoolean trackRemoteMode;
 	private final CursorDevice cursorDevice;

@@ -1,5 +1,11 @@
 # OT Scenes in Bitwig
 
+MIDI CC details
+- CFP: 0x30 (48)
+- AS: 0x37 (55) 
+- BS: 0x38 (56)
+
+
 The basic idea here is to use the MIDI messages the OT can TX and RX about (1) the current position of the crossfader and (2) which scene was selected when a slot assignment changes in conjunction with some nasty hacks involving CC modulators on the project level (potentially also some Note Grid action and maybe even a CLAP plugin for good measure) to bring something like scenes into the Bitwig modulation system. Certainly this can be aided by the API, but it's still not likely to be pretty (maybe you could tuck it way somewhere on a group track or something?)
 
 
