@@ -111,8 +111,11 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		// default to track remote mode
 		initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
 		
-		// select track
+		// track commands: select, record enable, mute, and solo
 		controls.bindToSelectTrackButton(selectTrackAction);
+		controls.bindToTrackRecordEnableButton(track.arm().toggleAction());
+		controls.bindToTrackMuteButton(track.mute().toggleAction());
+		controls.bindToTrackSoloButton(track.solo().toggleAction());
 	}
 
 	protected void bindSends(OTMidiHardwareControls controls) {
