@@ -15,6 +15,7 @@ Basic plan is outlined [here](../9-brainstorm-uses-for-remaining-controls/ot-sce
    1. might be a bit more involved, but should be a matter of 
       1. creating a `NoteInput` with the appropriate filters
       2. writing CFP data to it (like was done in a tutorial for note data)
+   2. yep, was [more involved](./send-cfp-data-to-bw.md)
 3. Modify the channel of the CFP data _dynamically_ according to the ABS value(s)
    1. this one will require [more thought](dynamic-channel-changes.md)! 
 
