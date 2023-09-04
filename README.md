@@ -1,8 +1,11 @@
 # Kasina
 
-***WARNING: This project is very much a work in progress. Expect breakage, changage, rearrangeage, and any other -age that might happen during active development. I'm trying to make things I can use, which means I'm definitely not trying to break anything and make every effort to avoid posting code that does so (I don't want to hurt my very expensive OT any more than you do!). That said, there can be lots of crazy data flying around all over the place in these kinds of setups and there's no way I can anticipant everything that might happen. All that to say: I believe everything here is safe, but I can neither prove nor guarantee it.*** 
 
 Extensions for Bitwig Studio that try to look deeply into what makes a piece of gear great and then bring something of that to the Bitwig world.
+
+
+***WARNING: This project is very much a work in progress. Expect breakage, changage, rearrangeage, and any other -age that might happen during active development. I'm trying to make things I can use, which means I'm definitely not trying to break anything and make every effort to avoid posting code that does so (I don't want to hurt my very expensive OT any more than you do!). That said, there can be lots of crazy data flying around all over the place in these kinds of setups and there's no way I can anticipant everything that might happen. All that to say: I believe everything here is safe, but I can neither prove nor guarantee it. Proceed at your own risk.*** 
+
 
 # Devices
 
@@ -47,3 +50,12 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
 - this SOB has a MIDI side too, ya know! 
   - Mapping it to XY FX is a no-brainer
   - more advanced and more like the OT above: map the XY params to 4 modulators and morph effects in the bitwig environment (again, but a bit different!)
+
+## Other devices and possible experimental subjects
+- Novation LaunchPad Pro MKI
+- Novation LaunchControl XL
+- Ableton Push 2
+- NI Maschine MK3
+- Arturia Beatstep Pro
+- Keith McMillen SoftStep 2
+- Various other odds and ends
