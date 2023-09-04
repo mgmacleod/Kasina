@@ -1,4 +1,4 @@
-# MissedByGreenMammals
+# Kasina
 Extensions for Bitwig Studio
 
 # Devices (work in progress)
