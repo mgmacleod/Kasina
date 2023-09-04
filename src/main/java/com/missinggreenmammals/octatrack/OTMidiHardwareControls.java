@@ -14,26 +14,31 @@ public class OTMidiHardwareControls {
 	private static final int[] CC_NUMS = { 7, 1, 2, 10, 71, 72, 73, 74, 75, 76 };
 //	private static final int[] BUTTON_NUMS = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 };
 
-	protected final AbsoluteHardwareKnob pbKnob;
-	protected final AbsoluteHardwareKnob atKnob;
-	protected AbsoluteHardwareKnob[] ccKnobs;
+	private final AbsoluteHardwareKnob pbKnob;
+	private final AbsoluteHardwareKnob atKnob;
+	private AbsoluteHardwareKnob[] ccKnobs;
 
-	protected final HardwareButton playButton;
-	protected final HardwareButton stopButton;
-	protected final HardwareButton prevButton;
-	protected final HardwareButton nextButton;
-	protected final HardwareButton selectTrackButton;
-	protected final HardwareButton remotePagePrevButton;
-	protected final HardwareButton remotePageNextButton;
-	protected final HardwareButton cursorDevicePrevButton;
-	protected final HardwareButton cursorDeviceNextButton;
-	protected final HardwareButton remoteModeButton;
+	private final HardwareButton recordButton;
+	private final HardwareButton playButton;
+	private final HardwareButton stopButton;
+	private final HardwareButton prevButton;
+	private final HardwareButton nextButton;
+	private final HardwareButton selectTrackButton;
+	private final HardwareButton remotePagePrevButton;
+	private final HardwareButton remotePageNextButton;
+	private final HardwareButton cursorDevicePrevButton;
+	private final HardwareButton cursorDeviceNextButton;
+	private final HardwareButton remoteModeButton;
 
-	protected final MidiIn midiIn;
-	protected final MidiOut midiOut;
+	private final HardwareButton trackMuteButton;
+	private final HardwareButton trackSoloButton;
+	private final HardwareButton trackRecordEnableButton;
 
-	protected final int channel;
-	protected final int trackNumber;
+	private final MidiIn midiIn;
+	private final MidiOut midiOut;
+
+	private final int channel;
+	private final int trackNumber;
 
 	public OTMidiHardwareControls(final int channel, final int trackNumber, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
@@ -51,6 +56,7 @@ public class OTMidiHardwareControls {
 			ccKnobs[i] = hardwareSurface.createAbsoluteHardwareKnob(createId("CC" + (i + 1)));
 		}
 
+		recordButton = hardwareSurface.createHardwareButton(createId("RECORD"));
 		playButton = hardwareSurface.createHardwareButton(createId("PLAY"));
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
@@ -62,8 +68,17 @@ public class OTMidiHardwareControls {
 		cursorDevicePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
 		cursorDeviceNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
 		remoteModeButton = hardwareSurface.createHardwareButton(createId("REMOTE_MODE"));
+
+		trackMuteButton = hardwareSurface.createHardwareButton(createId("MUTE"));
+		trackSoloButton = hardwareSurface.createHardwareButton(createId("SOLO"));
+		trackRecordEnableButton = hardwareSurface.createHardwareButton(createId("REC_ENABLE"));
+
 		initValueMatchers();
 
+	}
+
+	public HardwareActionBinding bindToRecordButton(HardwareBindable bindable) {
+		return recordButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToPlayButton(HardwareBindable bindable) {
@@ -106,6 +121,18 @@ public class OTMidiHardwareControls {
 		return selectTrackButton.pressedAction().setBinding(bindable);
 	}
 
+	public HardwareActionBinding bindToTrackMuteButton(HardwareBindable bindable) {
+		return trackMuteButton.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToTrackSoloButton(HardwareBindable bindable) {
+		return trackSoloButton.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToTrackRecordEnableButton(HardwareBindable bindable) {
+		return trackRecordEnableButton.pressedAction().setBinding(bindable);
+	}
+
 	public void clearCursorDeviceButtonBindings() {
 		cursorDeviceNextButton.pressedAction().clearBindings();
 		cursorDevicePrevButton.pressedAction().clearBindings();
@@ -120,10 +147,6 @@ public class OTMidiHardwareControls {
 			ccKnobs[i].setAdjustValueMatcher(midiIn.createAbsoluteCCValueMatcher(channel, CC_NUMS[i]));
 		}
 
-		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
-		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 61));
-		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 62));
-		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 63));
 
 		remotePagePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 48));
 		remotePageNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 49));
@@ -131,7 +154,16 @@ public class OTMidiHardwareControls {
 		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
 		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 52));
 
-		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
+		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 54));
+		trackRecordEnableButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
+		trackSoloButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
+		trackMuteButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
+
+		recordButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
+		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
+		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 61));
+		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 62));
+		nextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 63));
 	}
 
 	private String createId(String name) {

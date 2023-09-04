@@ -15,6 +15,7 @@ public abstract class OTTransportLayout extends OTMidiTrackLayout {
 	public void applyTo(OTMidiHardwareControls controls) {
 		controls.bindToPlayButton(transport.playAction());
 		controls.bindToStopButton(transport.stopAction());
+		controls.bindToRecordButton(transport.recordAction());
 	}
 	
 }
