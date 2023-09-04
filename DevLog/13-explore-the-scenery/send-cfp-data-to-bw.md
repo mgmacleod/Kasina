@@ -55,3 +55,8 @@ public void handleMidi(final int statusByte, final int data1, final int data2) {
 }
 ```
 
+### Remaining issues
+
+1. what to do when a scene change occurs while the crossfader is moving (which will happen all the time)?
+   1. probably don't want to leave the value of the old modulator where it was when the selection change came in, as this could potentially lead to a bunch of 'stuck' scenes
+   2. snapping back to zero is probably the best thing 

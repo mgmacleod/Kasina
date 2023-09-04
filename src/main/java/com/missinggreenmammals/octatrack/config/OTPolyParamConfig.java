@@ -1,7 +1,8 @@
 package com.missinggreenmammals.octatrack.config;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.bitwig.extension.api.util.midi.ShortMidiMessage;
-import com.bitwig.extension.callback.ShortMidiDataReceivedCallback;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.HardwareSurface;
@@ -17,18 +18,22 @@ import com.missinggreenmammals.octatrack.track.OTMidiTrack;
 
 public class OTPolyParamConfig extends OTMidiConfiguration {
 
-	private final int CFP_CHANNEL = 0;
-	private final int CFP_CC_NUMBER = 48;
+	private static final int CFP_CHANNEL = 0;
+	private static final int CFP_CC_NUMBER = 48;
+	private static final int AS_CC_NUMBER = 55;
+	private static final int BS_CC_NUMBER = 56;
+	private static final int BASE_CFP_STATUS = 176;
 
-	private final ShortMidiDataReceivedCallback midiCallback;
 	protected TrackBank trackBank;
 	protected CursorTrack cursorTrack;
 	protected MasterTrack masterTrack;
 	private final NoteInput noteInput;
-	private ControllerHost host;
+
+	private AtomicInteger asChannel, bsChannel;
 
 	public OTPolyParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
-		this.host = host;
+		asChannel = new AtomicInteger(0);
+		bsChannel = new AtomicInteger(0);
 
 		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
@@ -38,7 +43,7 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 
 		MidiIn midiIn = host.getMidiInPort(0);
 
-		midiIn.setMidiCallback(this::handleMidi);
+		midiIn.setMidiCallback(this::handleRawMidi);
 
 		/*
 		 * match on poly AT, of which none will be sent from the device and none can
@@ -78,18 +83,25 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 			}
 		};
 
-		midiCallback = this::handleMidi;
 	}
 
-	public void handleMidi(final int statusByte, final int data1, final int data2) {
+	public void handleRawMidi(final int statusByte, final int data1, final int data2) {
 		final ShortMidiMessage msg = new ShortMidiMessage(statusByte, data1, data2);
 
-		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == CFP_CC_NUMBER)
-			noteInput.sendRawMidiEvent(191, CFP_CC_NUMBER, data2);
-	}
+		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == AS_CC_NUMBER) {
+			asChannel.set(msg.getData2());
+		}
 
-	public ShortMidiDataReceivedCallback getMidiCallback() {
-		return midiCallback;
+		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == BS_CC_NUMBER) {
+			bsChannel.set(msg.getData2());
+		}
+
+		if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() == CFP_CC_NUMBER) {
+			int asStatus = asChannel.get() + BASE_CFP_STATUS;
+			int bsStatus = bsChannel.get() + BASE_CFP_STATUS;
+			noteInput.sendRawMidiEvent(asStatus, 0, 127 - data2);
+			noteInput.sendRawMidiEvent(bsStatus, 0, data2);
+		}
 	}
 
 }
