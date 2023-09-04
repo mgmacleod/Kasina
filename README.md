@@ -5,4 +5,4 @@ Extensions for Bitwig Studio
 
 ### Elektron Octatrack 
 
-<img src="images/ot-layout.png" width=1000 align="left">
+![Alt text](/images/ot-layout.png?raw=true "Octatrack Layout")
