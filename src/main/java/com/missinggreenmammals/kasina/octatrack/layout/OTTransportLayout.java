@@ -1,8 +1,8 @@
-package com.missinggreenmammals.octatrack.layout;
+package com.missinggreenmammals.kasina.octatrack.layout;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.Transport;
-import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
 
 public abstract class OTTransportLayout extends OTMidiTrackLayout {
 

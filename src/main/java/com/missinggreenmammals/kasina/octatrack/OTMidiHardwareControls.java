@@ -1,4 +1,4 @@
-package com.missinggreenmammals.octatrack;
+package com.missinggreenmammals.kasina.octatrack;
 
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
@@ -8,7 +8,7 @@ import com.bitwig.extension.controller.api.HardwareButton;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.MidiOut;
-import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
+import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 
 public class OTMidiHardwareControls {
 	private static final int[] CC_NUMS = { 7, 1, 2, 10, 71, 72, 73, 74, 75, 76 };

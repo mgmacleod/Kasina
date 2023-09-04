@@ -1,9 +1,9 @@
-package com.missinggreenmammals.octatrack.track;
+package com.missinggreenmammals.kasina.octatrack.track;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
-import com.missinggreenmammals.octatrack.layout.OTMidiTrackLayout;
+import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 
 public abstract class OTMidiTrack {
 
