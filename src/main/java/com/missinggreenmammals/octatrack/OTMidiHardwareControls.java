@@ -18,6 +18,7 @@ public class OTMidiHardwareControls {
 	private final AbsoluteHardwareKnob atKnob;
 	private AbsoluteHardwareKnob[] ccKnobs;
 
+	private final HardwareButton recordButton;
 	private final HardwareButton playButton;
 	private final HardwareButton stopButton;
 	private final HardwareButton prevButton;
@@ -55,6 +56,7 @@ public class OTMidiHardwareControls {
 			ccKnobs[i] = hardwareSurface.createAbsoluteHardwareKnob(createId("CC" + (i + 1)));
 		}
 
+		recordButton = hardwareSurface.createHardwareButton(createId("RECORD"));
 		playButton = hardwareSurface.createHardwareButton(createId("PLAY"));
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
@@ -73,6 +75,10 @@ public class OTMidiHardwareControls {
 
 		initValueMatchers();
 
+	}
+
+	public HardwareActionBinding bindToRecordButton(HardwareBindable bindable) {
+		return recordButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToPlayButton(HardwareBindable bindable) {
@@ -148,11 +154,12 @@ public class OTMidiHardwareControls {
 		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
 		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 52));
 
-		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
-		trackRecordEnableButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
-		trackSoloButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
-		trackMuteButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
+		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 54));
+		trackRecordEnableButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
+		trackSoloButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
+		trackMuteButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
 
+		recordButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
 		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
 		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 61));
 		prevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 62));
