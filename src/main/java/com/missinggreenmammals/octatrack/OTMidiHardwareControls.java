@@ -14,26 +14,29 @@ public class OTMidiHardwareControls {
 	private static final int[] CC_NUMS = { 7, 1, 2, 10, 71, 72, 73, 74, 75, 76 };
 //	private static final int[] BUTTON_NUMS = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 };
 
-	protected final AbsoluteHardwareKnob pbKnob;
-	protected final AbsoluteHardwareKnob atKnob;
-	protected AbsoluteHardwareKnob[] ccKnobs;
+	private final AbsoluteHardwareKnob pbKnob;
+	private final AbsoluteHardwareKnob atKnob;
+	private AbsoluteHardwareKnob[] ccKnobs;
 
-	protected final HardwareButton playButton;
-	protected final HardwareButton stopButton;
-	protected final HardwareButton prevButton;
-	protected final HardwareButton nextButton;
-	protected final HardwareButton selectTrackButton;
-	protected final HardwareButton remotePagePrevButton;
-	protected final HardwareButton remotePageNextButton;
-	protected final HardwareButton cursorDevicePrevButton;
-	protected final HardwareButton cursorDeviceNextButton;
-	protected final HardwareButton remoteModeButton;
+	private final HardwareButton playButton;
+	private final HardwareButton stopButton;
+	private final HardwareButton prevButton;
+	private final HardwareButton nextButton;
+	private final HardwareButton selectTrackButton;
+	private final HardwareButton remotePagePrevButton;
+	private final HardwareButton remotePageNextButton;
+	private final HardwareButton cursorDevicePrevButton;
+	private final HardwareButton cursorDeviceNextButton;
+	private final HardwareButton remoteModeButton;
 
-	protected final MidiIn midiIn;
-	protected final MidiOut midiOut;
+	private final HardwareButton trackMuteButton;
+	private final HardwareButton trackSoloButton;
 
-	protected final int channel;
-	protected final int trackNumber;
+	private final MidiIn midiIn;
+	private final MidiOut midiOut;
+
+	private final int channel;
+	private final int trackNumber;
 
 	public OTMidiHardwareControls(final int channel, final int trackNumber, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
@@ -62,6 +65,10 @@ public class OTMidiHardwareControls {
 		cursorDevicePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
 		cursorDeviceNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT2"));
 		remoteModeButton = hardwareSurface.createHardwareButton(createId("REMOTE_MODE"));
+
+		trackMuteButton = hardwareSurface.createHardwareButton(createId("MUTE"));
+		trackSoloButton = hardwareSurface.createHardwareButton(createId("SOLO"));
+
 		initValueMatchers();
 
 	}

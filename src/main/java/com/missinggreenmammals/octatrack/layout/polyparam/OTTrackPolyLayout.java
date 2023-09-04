@@ -13,7 +13,7 @@ import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
 
 public class OTTrackPolyLayout extends OTPolyParamLayout {
-	private static final int REMOTE_PAGE_SIZE = 8;
+	public static final int REMOTE_PAGE_SIZE = 8;
 
 	protected final Track track;
 	protected final CursorTrack cursorTrack;
@@ -32,26 +32,28 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 	private final CursorRemoteControlsPage deviceRemotesPage;
 	private final OTMidiHardwareControls controls;
 
-	public OTTrackPolyLayout(ControllerHost host, TrackBank trackBank, CursorTrack cursorTrack,
+	public OTTrackPolyLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
 			OTMidiHardwareControls controls) {
+
 		super(host, trackBank);
+		preinitialize(host, trackBank, track, cursorTrack, controls);
 
 		this.controls = controls;
 		this.cursorTrack = cursorTrack;
-		track = trackBank.getItemAt(controls.getTrackNumber() - 1);
+		this.track = track;
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
 		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
 
 		trackRemoteMode = new AtomicBoolean(true);
 		cursorDevice = track.createCursorDevice("Primary");
 		
-		trackRemotesPage = track.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
-				null);
 
 		deviceRemotesPage = cursorDevice
 				.createCursorRemoteControlsPage("device-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
 				null);
 		
+		trackRemotesPage = createRemotesPage(controls);
+
 		// get binding targets
 		trackRemotePagePrevAction = trackRemotesPage.selectPreviousAction();
 		trackRemotePageNextAction = trackRemotesPage.selectNextAction();
@@ -60,6 +62,16 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		cursorDevicePagePrevAction = cursorDevice.selectPreviousAction();
 		cursorDevicePageNextAction = cursorDevice.selectNextAction();
 		
+	}
+
+	protected void preinitialize(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
+			OTMidiHardwareControls controls) {
+		return;
+	}
+
+	protected CursorRemoteControlsPage createRemotesPage(OTMidiHardwareControls controls) {
+		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
+				null);
 	}
 
 	private String remoteModeChangeDescription() {
@@ -88,9 +100,7 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		controls.getCcKnobs()[0].setBinding(track.volume());
 
 		// Sends
-		SendBank sendBank = track.sendBank();
-		controls.getPbKnob().setBinding(sendBank.getItemAt(0));
-		controls.getAtKnob().setBinding(sendBank.getItemAt(1));
+		bindSends(controls);
 
 		// pan
 		controls.getCcKnobs()[3].setBinding(track.pan());
@@ -103,6 +113,12 @@ public class OTTrackPolyLayout extends OTPolyParamLayout {
 		
 		// select track
 		controls.bindToSelectTrackButton(selectTrackAction);
+	}
+
+	protected void bindSends(OTMidiHardwareControls controls) {
+		SendBank sendBank = track.sendBank();
+		controls.getPbKnob().setBinding(sendBank.getItemAt(0));
+		controls.getAtKnob().setBinding(sendBank.getItemAt(1));
 	}
 
 
