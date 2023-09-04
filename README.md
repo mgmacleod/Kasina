@@ -1,7 +1,10 @@
 # Kasina
-Extensions for Bitwig Studio
 
-# Devices (work in progress)
+***WARNING: This project is very much a work in progress. Expect breakage, changage, rearrangeage, and any other -age that might happen during active development. I'm trying to make things I can use, which means I'm definitely not trying to break anything and make every effort to avoid posting code that does so (I don't want to hurt my very expensive OT any more than you do!). That said, there can be lots of crazy data flying around all over the place in these kinds of setups and there's no way I can anticipant everything that might happen. All that to say: I believe everything here is safe, but I can neither prove nor guarantee it.*** 
+
+Extensions for Bitwig Studio that try to look deeply into what makes a piece of gear great and then bring something of that to the Bitwig world.
+
+# Devices
 
 ## Elektron Octatrack 
 
@@ -25,8 +28,8 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
   - Solo
   - Mute
   - track types
-    - tracks 1 - 7 control regular (audio/midi/hybrid) tracks 
-    - track 8 controls the master track and project remote controls
+    - tracks 1 - 7 on the Octatrack control regular (audio/midi/hybrid) tracks in Bitwig Studio
+    - track 8 on the Octatrack controls Bitwig's master track and the project remote controls
   - trig buttons move the bank of 7 regular tracks around the project
 - Adjust remote controls on tracks and devices
   - Navigate pages of remotes with trig buttons
@@ -38,6 +41,7 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
   - Many more things planned 
     - additional features for the MIDI side of the OT to act as a controller for Bitwig
     - what's to be gained by expanding the extension to incorporate elements of the Audio side?
+
 
 ## Korg Kaoss Pad KP3+ (not yet started)
 - this SOB has a MIDI side too, ya know! 
