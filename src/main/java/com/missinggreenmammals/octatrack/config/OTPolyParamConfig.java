@@ -86,6 +86,8 @@ public class OTPolyParamConfig extends OTMidiConfiguration {
 			}
 		};
 
+		noteInput.sendRawMidiEvent(BASE_CFP_STATUS, 61, 0);
+
 	}
 
 	public void handleRawMidi(final int statusByte, final int data1, final int data2) {

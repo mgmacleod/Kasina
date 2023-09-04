@@ -27,8 +27,11 @@ if (msg.isControlChange() && msg.getChannel() == CFP_CHANNEL && msg.getData1() =
 
 - values for scene A are 'inverted' so that its values are highest precisely when the crossfader is closest to the A side (when the CC value is in fact 0)
 - this all seems to work pretty nicely, although there are still some rough edges
-  - issues remain about what to do with abandoned and/or stuck modulators
-  - there seems to be some weirdness that happens with very fast changes, which this will absolutely need to support
+  - ~~issues remain about what to do with abandoned and/or stuck modulators~~
+    - resolved by setting old modulators back to zero and new ones to whatever their current value should be
+    - i've been playing with it like this quite a bit and so far it sounds and feels great
+    - also been keeping an eye on performance meters and everything looks normal. very pleased so far
   - there's also the question of default values
     - when the extension loads, what channels should it use?
     - if the ABS values are part of the 'report all audio CCs' command, then we could poll the OT itself on boot
+      - seems they are (or at least I added the call and scenes now seem to magically line up)
