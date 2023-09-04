@@ -1,6 +1,6 @@
-package com.missinggreenmammals.octatrack.layout;
+package com.missinggreenmammals.kasina.octatrack.layout;
 
-import com.missinggreenmammals.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
 
 public abstract class OTMidiTrackLayout {
 	public static final int PAGE_SIZE = 10;

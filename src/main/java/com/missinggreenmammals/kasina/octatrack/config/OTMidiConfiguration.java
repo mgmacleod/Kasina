@@ -1,6 +1,6 @@
-package com.missinggreenmammals.octatrack.config;
+package com.missinggreenmammals.kasina.octatrack.config;
 
-import com.missinggreenmammals.octatrack.track.OTMidiTrack;
+import com.missinggreenmammals.kasina.octatrack.track.OTMidiTrack;
 
 public abstract class OTMidiConfiguration {
 
