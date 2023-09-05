@@ -17,11 +17,11 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
 
 
 ### Features
-- Control basic transport functions
+- Control basic transport functions 
   - play
   - stop
   - record
-- Adjust basic mix parameters of tracks in Bitwig Studio from 
+- Adjust basic mix parameters of tracks in Bitwig Studio
   - Volume
   - Pan
   - Send 1 

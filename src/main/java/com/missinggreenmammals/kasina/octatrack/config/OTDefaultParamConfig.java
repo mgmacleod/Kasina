@@ -35,7 +35,7 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 
 	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
 		asChannel = new AtomicInteger(0);
-		bsChannel = new AtomicInteger(0);
+		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
 
 		trackBank = host.createMainTrackBank(7, 2, 0);
