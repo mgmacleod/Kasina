@@ -23,6 +23,7 @@ public class OctatrackExtension extends ControllerExtension {
 
 	@Override
 	public void flush() {
+		// do nothing
 	}
 
 }

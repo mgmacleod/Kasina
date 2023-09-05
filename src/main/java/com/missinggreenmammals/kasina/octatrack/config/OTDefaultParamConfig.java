@@ -12,6 +12,7 @@ import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.Octatrack;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMasterTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTRegularTrackLayout;
@@ -28,15 +29,17 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 	protected TrackBank trackBank;
 	protected CursorTrack cursorTrack;
 	private final NoteInput noteInput;
+	private final Octatrack octatrack;
 
 	private AtomicInteger asChannel;
 	private AtomicInteger bsChannel;
 	private AtomicInteger cfp;
 
-	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
-		asChannel = new AtomicInteger(0);
-		bsChannel = new AtomicInteger(8);
+	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface, Octatrack octatrack, int valSceneA, int valSceneB) {
+		asChannel = new AtomicInteger(valSceneA);
+		bsChannel = new AtomicInteger(valSceneB);
 		cfp = new AtomicInteger(0);
+		this.octatrack = octatrack;
 
 		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
@@ -115,6 +118,20 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, data2);
 
 		}
+	}
+	
+	public int getSceneSelectionA() {
+		return asChannel.get();
+	}
+	
+	public int getSceneSelectionB() {
+		return bsChannel.get();
+	}
+
+	@Override
+	public void doPersistence() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

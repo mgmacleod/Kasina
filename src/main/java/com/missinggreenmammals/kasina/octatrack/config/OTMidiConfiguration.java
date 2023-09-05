@@ -9,5 +9,7 @@ public abstract class OTMidiConfiguration {
 	public OTMidiConfiguration() {
 		tracks = new OTMidiTrack[8];
 	}
+	
+	public abstract void doPersistence();
 
 }
