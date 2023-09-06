@@ -86,8 +86,7 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 			}
 		};
 
-		noteInput.sendRawMidiEvent(BASE_CFP_STATUS, 61, 0);
-
+		initializeScenes();
 	}
 
 	public void handleRawMidi(final int statusByte, final int data1, final int data2) {
@@ -98,15 +97,11 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		}
 
 		if (data1 == AS_CC_NUMBER) {
-			final int asChannelOld = asChannel.getAndSet(data2);
-			noteInput.sendRawMidiEvent(asChannelOld + BASE_CFP_STATUS, 0, 0);
-			noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
+			handleSceneSelectionChange(data2, asChannel, true);
 		}
 
 		if (data1 == BS_CC_NUMBER) {
-			final int bsChannelOld = bsChannel.getAndSet(data2);
-			noteInput.sendRawMidiEvent(bsChannelOld + BASE_CFP_STATUS, 0, 0);
-			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
+			handleSceneSelectionChange(data2, bsChannel, false);
 		}
 
 		if (data1 == CFP_CC_NUMBER) {
@@ -115,6 +110,18 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, data2);
 
 		}
+	}
+	
+	private void handleSceneSelectionChange(final int data2, final AtomicInteger channel, boolean isSceneA) {
+		final int oldChannel = channel.getAndSet(data2);
+		noteInput.sendRawMidiEvent(oldChannel + BASE_CFP_STATUS, 0, 0);
+		int newCfp = isSceneA ? 127 - cfp.get() : cfp.get();
+		noteInput.sendRawMidiEvent(channel.get() + BASE_CFP_STATUS, 0, newCfp);
+	}
+
+	private void initializeScenes() {
+		noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
+		noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
 	}
 
 }
