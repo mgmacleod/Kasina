@@ -102,11 +102,11 @@ public class OTMidiHardwareControls {
 	}
 
 	public HardwareActionBinding bindToToggleTransportLoopButton(HardwareBindable bindable) {
-		return toggleMetronomeButton.pressedAction().setBinding(bindable);
+		return toggleTransportLoopButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToToggleMetronomeButton(HardwareBindable bindable) {
-		return toggleTransportLoopButton.pressedAction().setBinding(bindable);
+		return toggleMetronomeButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToRemotePageNextButton(HardwareBindable bindable) {
