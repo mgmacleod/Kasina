@@ -16,6 +16,8 @@ public abstract class OTTransportLayout extends OTMidiTrackLayout {
 		controls.bindToPlayButton(transport.playAction());
 		controls.bindToStopButton(transport.stopAction());
 		controls.bindToRecordButton(transport.recordAction());
+		controls.bindToToggleMetronomeButton(transport.isMetronomeTickPlaybackEnabled());
+		controls.bindToToggleTransportLoopButton(transport.isArrangerLoopEnabled());
 	}
 	
 }

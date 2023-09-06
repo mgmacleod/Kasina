@@ -29,6 +29,8 @@ public class OTMidiHardwareControls {
 	private final HardwareButton cursorDevicePrevButton;
 	private final HardwareButton cursorDeviceNextButton;
 	private final HardwareButton remoteModeButton;
+	private final HardwareButton toggleMetronomeButton;
+	private final HardwareButton toggleTransportLoopButton;
 
 	private final HardwareButton trackMuteButton;
 	private final HardwareButton trackSoloButton;
@@ -61,8 +63,10 @@ public class OTMidiHardwareControls {
 		stopButton = hardwareSurface.createHardwareButton(createId("STOP"));
 		prevButton = hardwareSurface.createHardwareButton(createId("PREV"));
 		nextButton = hardwareSurface.createHardwareButton(createId("NEXT"));
-		selectTrackButton = hardwareSurface.createHardwareButton(createId("TRACK_SELECT"));
+		toggleMetronomeButton = hardwareSurface.createHardwareButton(createId("METRO"));
+		toggleTransportLoopButton = hardwareSurface.createHardwareButton(createId("LOOP"));
 
+		selectTrackButton = hardwareSurface.createHardwareButton(createId("TRACK_SELECT"));
 		remotePagePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV1"));
 		remotePageNextButton = hardwareSurface.createHardwareButton(createId("SUB_NEXT1"));
 		cursorDevicePrevButton = hardwareSurface.createHardwareButton(createId("SUB_PREV2"));
@@ -95,6 +99,14 @@ public class OTMidiHardwareControls {
 
 	public HardwareActionBinding bindToPrevButton(HardwareBindable bindable) {
 		return prevButton.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToToggleTransportLoopButton(HardwareBindable bindable) {
+		return toggleMetronomeButton.pressedAction().setBinding(bindable);
+	}
+
+	public HardwareActionBinding bindToToggleMetronomeButton(HardwareBindable bindable) {
+		return toggleTransportLoopButton.pressedAction().setBinding(bindable);
 	}
 
 	public HardwareActionBinding bindToRemotePageNextButton(HardwareBindable bindable) {
@@ -153,12 +165,12 @@ public class OTMidiHardwareControls {
 		cursorDevicePrevButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 50));
 		cursorDeviceNextButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 51));
 		remoteModeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 52));
-
-		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 54));
-		trackRecordEnableButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
-		trackSoloButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
-		trackMuteButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
-
+		selectTrackButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 53));
+		trackRecordEnableButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 54));
+		trackSoloButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 55));
+		trackMuteButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 56));
+		toggleMetronomeButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 57));
+		toggleTransportLoopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 58));
 		recordButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 59));
 		playButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 60));
 		stopButton.pressedAction().setActionMatcher(midiIn.createNoteOnActionMatcher(channel, 61));
