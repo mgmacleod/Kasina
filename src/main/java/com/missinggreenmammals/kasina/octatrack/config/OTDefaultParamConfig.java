@@ -12,7 +12,6 @@ import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
-import com.missinggreenmammals.kasina.octatrack.Octatrack;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMasterTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTRegularTrackLayout;
@@ -29,17 +28,15 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 	protected TrackBank trackBank;
 	protected CursorTrack cursorTrack;
 	private final NoteInput noteInput;
-	private final Octatrack octatrack;
 
 	private AtomicInteger asChannel;
 	private AtomicInteger bsChannel;
 	private AtomicInteger cfp;
 
-	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface, Octatrack octatrack, int valSceneA, int valSceneB) {
-		asChannel = new AtomicInteger(valSceneA);
-		bsChannel = new AtomicInteger(valSceneB);
+	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
+		asChannel = new AtomicInteger(0);
+		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
-		this.octatrack = octatrack;
 
 		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
@@ -89,8 +86,7 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 			}
 		};
 
-		noteInput.sendRawMidiEvent(BASE_CFP_STATUS, 61, 0);
-
+		initializeScenes();
 	}
 
 	public void handleRawMidi(final int statusByte, final int data1, final int data2) {
@@ -101,15 +97,11 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		}
 
 		if (data1 == AS_CC_NUMBER) {
-			final int asChannelOld = asChannel.getAndSet(data2);
-			noteInput.sendRawMidiEvent(asChannelOld + BASE_CFP_STATUS, 0, 0);
-			noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
+			handleSceneSelectionChange(data2, asChannel, true);
 		}
 
 		if (data1 == BS_CC_NUMBER) {
-			final int bsChannelOld = bsChannel.getAndSet(data2);
-			noteInput.sendRawMidiEvent(bsChannelOld + BASE_CFP_STATUS, 0, 0);
-			noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
+			handleSceneSelectionChange(data2, bsChannel, false);
 		}
 
 		if (data1 == CFP_CC_NUMBER) {
@@ -120,18 +112,16 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		}
 	}
 	
-	public int getSceneSelectionA() {
-		return asChannel.get();
-	}
-	
-	public int getSceneSelectionB() {
-		return bsChannel.get();
+	private void handleSceneSelectionChange(final int data2, final AtomicInteger channel, boolean isSceneA) {
+		final int oldChannel = channel.getAndSet(data2);
+		noteInput.sendRawMidiEvent(oldChannel + BASE_CFP_STATUS, 0, 0);
+		int newCfp = isSceneA ? 127 - cfp.get() : cfp.get();
+		noteInput.sendRawMidiEvent(channel.get() + BASE_CFP_STATUS, 0, newCfp);
 	}
 
-	@Override
-	public void doPersistence() {
-		// TODO Auto-generated method stub
-		
+	private void initializeScenes() {
+		noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
+		noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
 	}
 
 }

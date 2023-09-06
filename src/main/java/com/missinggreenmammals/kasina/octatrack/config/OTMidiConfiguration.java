@@ -10,6 +10,4 @@ public abstract class OTMidiConfiguration {
 		tracks = new OTMidiTrack[8];
 	}
 	
-	public abstract void doPersistence();
-
 }

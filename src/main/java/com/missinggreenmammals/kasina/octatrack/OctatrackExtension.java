@@ -19,11 +19,12 @@ public class OctatrackExtension extends ControllerExtension {
 
 	@Override
 	public void exit() {
+		return;
 	}
 
 	@Override
 	public void flush() {
-		// do nothing
+		return;
 	}
 
 }
