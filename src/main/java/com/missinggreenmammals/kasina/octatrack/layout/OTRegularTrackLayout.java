@@ -10,7 +10,7 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 
 public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;

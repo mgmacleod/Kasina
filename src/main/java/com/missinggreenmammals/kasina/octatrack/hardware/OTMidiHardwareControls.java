@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack;
+package com.missinggreenmammals.kasina.octatrack.hardware;
 
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;

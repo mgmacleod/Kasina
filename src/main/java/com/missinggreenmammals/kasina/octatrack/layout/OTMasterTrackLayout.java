@@ -5,7 +5,7 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 
 public class OTMasterTrackLayout extends OTRegularTrackLayout {
 

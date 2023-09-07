@@ -11,7 +11,7 @@ import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMasterTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTRegularTrackLayout;
