@@ -21,7 +21,7 @@ public class OtShiftKey extends OtKey {
 	/**
 	 * The {@link HardwareBindable} that represents the binding when the shift key is released
 	 */
-	private HardwareBindable shiftBinding;
+	private HardwareBindable noteOffBinding;
 
 	public OtShiftKey(final int midiNote, final int midiChannel, final int otTrack, final String name,
 			final ControllerHost host, final HardwareSurface hardwareSurface) {

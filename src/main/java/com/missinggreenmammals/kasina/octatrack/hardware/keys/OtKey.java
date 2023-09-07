@@ -28,4 +28,8 @@ public abstract class OtKey extends OtHardwareElement {
 		return midiNote;
 	}
 
+	public void clearBindings() {
+		button.pressedAction().clearBindings();
+	}
+
 }
