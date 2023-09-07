@@ -1,8 +1,9 @@
-package com.missinggreenmammals.kasina.octatrack.hardware;
+package com.missinggreenmammals.kasina.octatrack.hardware.keys;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.HardwareSurface;
+import com.missinggreenmammals.kasina.octatrack.hardware.Shiftable;
 
 import lombok.Setter;
 
@@ -23,10 +24,10 @@ public class OtTrigKey extends OtKey implements Shiftable {
 	 */
 	private HardwareBindable shiftBinding;
 	
-	public OtTrigKey(final int midiNote, final int midiChannel, final int otTrack, final String id, 
+	public OtTrigKey(final int midiNote, final int midiChannel, final int otTrack, final String name, 
 			final ControllerHost host, final HardwareSurface hardwareSurface) {
 		
-		super(midiNote, midiChannel, otTrack, id, host, hardwareSurface);
+		super(midiNote, midiChannel, otTrack, name, host, hardwareSurface);
 		
 		disableShiftMode();
 	}
