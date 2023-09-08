@@ -15,6 +15,7 @@ import com.missinggreenmammals.kasina.octatrack.hardware.Shiftable;
  */
 public class OtKeyboard extends OtHardwareElement implements Shiftable {
 	
+	// Shift key
 	private final OtShiftKey shiftKey;
 
 	// Individual buttons for the specific keys
@@ -31,7 +32,6 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 	private final OtTrigKey remoteModeKey;
 	private final OtTrigKey toggleMetronomeKey;
 	private final OtTrigKey toggleTransportLoopKey;
-
 	private final OtTrigKey trackMuteKey;
 	private final OtTrigKey trackSoloKey;
 	private final OtTrigKey trackRecordEnableKey;
@@ -64,10 +64,16 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 		trackBankPrevKey = new OtTrigKey(62, channel, otTrack, "TRACK_PREV", host, hardwareSurface);
 		trackBankNextKey = new OtTrigKey(63, channel, otTrack, "TRACK_NEXT", host, hardwareSurface);
 
+		addKeysToList();
+
 		// Shift key
 		shiftKey = new OtShiftKey(64, channel, otTrack, "SHIFT", host, hardwareSurface);
-
-		addKeysToList();
+		final HardwareBindable shiftKeyPressedAction = host.createAction((v) -> enableShiftMode(),
+				() -> "ShiftKeyPressedAction");
+		final HardwareBindable shiftKeyReleasedAction = host.createAction((v) -> disableShiftMode(),
+				() -> "ShiftKeyReleasedAction");
+		shiftKey.setNoteOnBinding(shiftKeyPressedAction);
+		shiftKey.setNoteOffBinding(shiftKeyReleasedAction);
 	}
 
 	private void addKeysToList() {
@@ -94,6 +100,8 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 		for (final OtTrigKey key : trigKeys) {
 			if (key.getShiftBinding() != null) {
 				key.enableShiftMode();
+			} else {
+				key.clearBindings();
 			}
 		}
 	}
