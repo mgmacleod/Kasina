@@ -91,12 +91,15 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 
 	@Override
 	public void enableShiftMode() {
-		trigKeys.forEach((key) -> key.enableShiftMode());
+		for (final OtTrigKey key : trigKeys) {
+			if (key.getShiftBinding() != null) {
+				key.enableShiftMode();
+			}
+		}
 	}
 
 	@Override
 	public void disableShiftMode() {
-
 		for (final OtTrigKey key : trigKeys) {
 			if (key.getRegularBinding() != null) {
 				key.disableShiftMode();
