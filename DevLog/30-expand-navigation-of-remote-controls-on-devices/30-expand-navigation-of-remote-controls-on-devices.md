@@ -13,7 +13,15 @@ The idea here is that we want to be able to navigate into and out of device chai
       - shift + prev_device = leave device chain
 
 ## Navigating device chains
-- 
+- we already have a `CursorDevice` per track
+  - `CursorDevice` extends both `Cursor` and `Device`
+    - `Device.getCursorSlot()` returns a `DeviceSlot`, which extends `DeviceChain` and "represent nested FX slots in devices"
+    - `Device.deviceChain()` returns the chain containing the current device
+- Given that, it seems like the following should work:
+  - call `getCursorSlot()` on the cursorDevice to enter a chain
+    - not quite clear on how to navigate within the chain yet, but we'll get there
+  - call `deviceChain()` on the current device in the chain to get back out
+    - although this then lands you in a `DeviceChain`
 
 ## Shift mode design
 
