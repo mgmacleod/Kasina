@@ -2,6 +2,7 @@ package com.missinggreenmammals.kasina.octatrack.hardware.encoders;
 
 import com.bitwig.extension.controller.api.AbsoluteHardwareKnob;
 import com.bitwig.extension.controller.api.ControllerHost;
+import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtHardwareElement;
 
@@ -18,6 +19,10 @@ public abstract class OtEncoder extends OtHardwareElement {
 		super(midiChannel, otTrack);
 
 		knob = hardwareSurface.createAbsoluteHardwareKnob(createId(name));
+	}
+
+	public void setBinding(final HardwareBindable bindable) {
+		knob.setBinding(bindable);
 	}
 
 }

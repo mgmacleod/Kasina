@@ -5,12 +5,14 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.HardwareSurface;
 import com.missinggreenmammals.kasina.octatrack.hardware.Shiftable;
 
+import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Represents a key on the chromatic keyboard of the Octatrack with support for shift functions.
  *
  */
+@Getter
 @Setter
 public class OtTrigKey extends OtKey implements Shiftable {
 	
@@ -28,8 +30,6 @@ public class OtTrigKey extends OtKey implements Shiftable {
 			final ControllerHost host, final HardwareSurface hardwareSurface) {
 		
 		super(midiNote, midiChannel, otTrack, name, host, hardwareSurface);
-		
-		disableShiftMode();
 	}
 
 	@Override

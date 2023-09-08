@@ -50,7 +50,7 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 		remotePagePrevKey = new OtTrigKey(48, channel, otTrack, "REM_PAGE_PREV", host, hardwareSurface);
 		remotePageNextKey = new OtTrigKey(49, channel, otTrack, "REM_PAGE_NEXT", host, hardwareSurface);
 		cursorDevicePrevKey = new OtTrigKey(50, channel, otTrack, "DEV_PAGE_PREV", host, hardwareSurface);
-		cursorDeviceNextKey = new OtTrigKey(51, channel, otTrack, "DEV_PAGE_PREV", host, hardwareSurface);
+		cursorDeviceNextKey = new OtTrigKey(51, channel, otTrack, "DEV_PAGE_NEXT", host, hardwareSurface);
 		remoteModeKey = new OtTrigKey(52, channel, otTrack, "REMOTE_MODE", host, hardwareSurface);
 		selectTrackKey = new OtTrigKey(53, channel, otTrack, "TRACK_SELECT", host, hardwareSurface);
 		trackRecordEnableKey = new OtTrigKey(54, channel, otTrack, "REC_ENABLE", host, hardwareSurface);
@@ -96,7 +96,12 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 
 	@Override
 	public void disableShiftMode() {
-		trigKeys.forEach((key) -> key.disableShiftMode());
+
+		for (final OtTrigKey key : trigKeys) {
+			if (key.getRegularBinding() != null) {
+				key.disableShiftMode();
+			}
+		}
 	}
 	
 	public void bindToRecordKeyRegular(final HardwareBindable bindable) {

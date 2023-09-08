@@ -12,8 +12,8 @@ import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.layout.OTDefaultTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTMasterTrackLayout;
-import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OTRegularTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.track.OTMidiTrack;
 
@@ -33,7 +33,7 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 	private AtomicInteger bsChannel;
 	private AtomicInteger cfp;
 
-	public OTDefaultParamConfig(ControllerHost host, HardwareSurface hardwareSurface) {
+	public OTDefaultParamConfig(final ControllerHost host, final HardwareSurface hardwareSurface) {
 		asChannel = new AtomicInteger(0);
 		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
@@ -43,7 +43,7 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 
 		trackBank.followCursorTrack(cursorTrack);
 
-		MidiIn midiIn = host.getMidiInPort(0);
+		final MidiIn midiIn = host.getMidiInPort(0);
 
 		midiIn.setMidiCallback(this::handleRawMidi);
 
@@ -60,11 +60,11 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		int channel = 8;
 
 		for (int i = 0; i < tracks.length - 1; i++) {
-			OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
-			Track bwTrack = trackBank.getItemAt(track - 1);
+			final OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+			final Track bwTrack = trackBank.getItemAt(track - 1);
 			tracks[i] = new OTMidiTrack("TRACK" + track, controls, host, hardwareSurface) {
 				@Override
-				protected OTMidiTrackLayout createLayout(ControllerHost host) {
+				protected OTDefaultTrackLayout createLayout(final ControllerHost host) {
 					return new OTRegularTrackLayout(host, trackBank, bwTrack, cursorTrack, controls);
 				}
 			};
@@ -76,12 +76,12 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		// master track
 		track = 8;
 		channel = 15;
-		OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
-		MasterTrack masterTrack = host.createMasterTrack(0);
+		final OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+		final MasterTrack masterTrack = host.createMasterTrack(0);
 
 		tracks[7] = new OTMidiTrack("MasterTrack", controls, host, hardwareSurface) {
 			@Override
-			protected OTMidiTrackLayout createLayout(ControllerHost host) {
+			protected OTDefaultTrackLayout createLayout(final ControllerHost host) {
 				return new OTMasterTrackLayout(host, trackBank, masterTrack, cursorTrack, controls);
 			}
 		};
@@ -112,10 +112,10 @@ public class OTDefaultParamConfig extends OTMidiConfiguration {
 		}
 	}
 	
-	private void handleSceneSelectionChange(final int data2, final AtomicInteger channel, boolean isSceneA) {
+	private void handleSceneSelectionChange(final int data2, final AtomicInteger channel, final boolean isSceneA) {
 		final int oldChannel = channel.getAndSet(data2);
 		noteInput.sendRawMidiEvent(oldChannel + BASE_CFP_STATUS, 0, 0);
-		int newCfp = isSceneA ? 127 - cfp.get() : cfp.get();
+		final int newCfp = isSceneA ? 127 - cfp.get() : cfp.get();
 		noteInput.sendRawMidiEvent(channel.get() + BASE_CFP_STATUS, 0, newCfp);
 	}
 

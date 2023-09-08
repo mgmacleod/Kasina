@@ -26,14 +26,14 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 	private final HardwareBindable cursorDevicePagePrevAction;
 	private final HardwareBindable cursorDevicePageNextAction;
 
-	private AtomicBoolean trackRemoteMode;
+	private final AtomicBoolean trackRemoteMode;
 	private final CursorDevice cursorDevice;
 	private final CursorRemoteControlsPage trackRemotesPage;
 	private final CursorRemoteControlsPage deviceRemotesPage;
 	private final OTMidiHardwareControls controls;
 
-	public OTRegularTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
-			OTMidiHardwareControls controls) {
+	public OTRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+			final OTMidiHardwareControls controls) {
 
 		super(host, trackBank);
 		preinitialize(host, trackBank, track, cursorTrack, controls);
@@ -49,7 +49,7 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 		
 
 		deviceRemotesPage = cursorDevice
-				.createCursorRemoteControlsPage("device-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
+				.createCursorRemoteControlsPage("device-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
 				null);
 		
 		trackRemotesPage = createRemotesPage(controls);
@@ -64,13 +64,13 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 		
 	}
 
-	protected void preinitialize(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
-			OTMidiHardwareControls controls) {
+	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+			final OTMidiHardwareControls controls) {
 		return;
 	}
 
-	protected CursorRemoteControlsPage createRemotesPage(OTMidiHardwareControls controls) {
-		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getTrackNumber() - 1), REMOTE_PAGE_SIZE,
+	protected CursorRemoteControlsPage createRemotesPage(final OTMidiHardwareControls controls) {
+		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
 				null);
 	}
 
@@ -78,8 +78,8 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 		return "Toggle remote control mode";
 	}
 
-	private void handleRemoteModeChange(double value) {
-		boolean oldMode = trackRemoteMode.get();
+	private void handleRemoteModeChange(final double value) {
+		final boolean oldMode = trackRemoteMode.get();
 		trackRemoteMode.set(!oldMode);
 
 		if (oldMode) {
@@ -90,64 +90,66 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 			initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
 		}
 
+		controls.getKeyboard().disableShiftMode();
+
 	}
 
 	@Override
-	public void applyTo(OTMidiHardwareControls controls) {
+	public void applyTo(final OTMidiHardwareControls controls) {
 		super.applyTo(controls);
 
 		// volume
-		controls.getCcKnobs()[0].setBinding(track.volume());
+		controls.getCcEncoders()[0].setBinding(track.volume());
 
 		// Sends
 		bindSends(controls);
 
 		// pan
-		controls.getCcKnobs()[3].setBinding(track.pan());
+		controls.getCcEncoders()[3].setBinding(track.pan());
 
 		// remotes
-		controls.bindToRemoteModeButton(remoteModeChangeAction);
+		controls.getKeyboard().bindToRemoteModeKeyRegular(remoteModeChangeAction);
 
 		// default to track remote mode
 		initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
 		
 		// track commands: select, record enable, mute, and solo
-		controls.bindToSelectTrackButton(selectTrackAction);
-		controls.bindToTrackRecordEnableButton(track.arm().toggleAction());
-		controls.bindToTrackMuteButton(track.mute().toggleAction());
-		controls.bindToTrackSoloButton(track.solo().toggleAction());
+		controls.getKeyboard().bindToSelectTrackKeyRegular(selectTrackAction);
+		controls.getKeyboard().bindToTrackRecordEnableKeyRegular(track.arm().toggleAction());
+		controls.getKeyboard().bindToTrackMuteKeyRegular(track.mute().toggleAction());
+		controls.getKeyboard().bindToTrackSoloKeyRegular(track.solo().toggleAction());
 	}
 
-	protected void bindSends(OTMidiHardwareControls controls) {
-		SendBank sendBank = track.sendBank();
-		controls.getPbKnob().setBinding(sendBank.getItemAt(0));
-		controls.getAtKnob().setBinding(sendBank.getItemAt(1));
+	protected void bindSends(final OTMidiHardwareControls controls) {
+		final SendBank sendBank = track.sendBank();
+		controls.getPbEncoder().setBinding(sendBank.getItemAt(0));
+		controls.getAtEncoder().setBinding(sendBank.getItemAt(1));
 	}
 
 
 	private void initForTrackRemotes(final CursorRemoteControlsPage controlsPage,
 			final HardwareBindable selectPrevAction, final HardwareBindable selectNextAction) {
 		
-		controls.getCcKnobs()[1].setBinding(controlsPage.getParameter(0));
-		controls.getCcKnobs()[2].setBinding(controlsPage.getParameter(1));
-		controls.getCcKnobs()[4].setBinding(controlsPage.getParameter(2));
-		controls.getCcKnobs()[5].setBinding(controlsPage.getParameter(3));
-		controls.getCcKnobs()[6].setBinding(controlsPage.getParameter(4));
-		controls.getCcKnobs()[7].setBinding(controlsPage.getParameter(5));
-		controls.getCcKnobs()[8].setBinding(controlsPage.getParameter(6));
-		controls.getCcKnobs()[9].setBinding(controlsPage.getParameter(7));
+		controls.getCcEncoders()[1].setBinding(controlsPage.getParameter(0));
+		controls.getCcEncoders()[2].setBinding(controlsPage.getParameter(1));
+		controls.getCcEncoders()[4].setBinding(controlsPage.getParameter(2));
+		controls.getCcEncoders()[5].setBinding(controlsPage.getParameter(3));
+		controls.getCcEncoders()[6].setBinding(controlsPage.getParameter(4));
+		controls.getCcEncoders()[7].setBinding(controlsPage.getParameter(5));
+		controls.getCcEncoders()[8].setBinding(controlsPage.getParameter(6));
+		controls.getCcEncoders()[9].setBinding(controlsPage.getParameter(7));
 
-		controls.bindToRemotePagePrevButton(selectPrevAction);
-		controls.bindToRemotePageNextButton(selectNextAction);
-		controls.clearCursorDeviceButtonBindings(); // no devices to switch between in track mode
+		controls.getKeyboard().bindToRemotePagePrevKeyRegular(selectPrevAction);
+		controls.getKeyboard().bindToRemotePageNextKeyRegular(selectNextAction);
+		controls.getKeyboard().clearCursorDeviceKeyBindings(); // no devices to switch between in track mode
 	}
 
 	private void initForDeviceRemotes(final CursorRemoteControlsPage controlsPage,
-			CursorDevice cursorDevice) {
+			final CursorDevice cursorDevice) {
 
 		initForTrackRemotes(controlsPage, deviceRemotePagePrevAction, deviceRemotePageNextAction);
 
-		controls.bindToCursorDevicePrevButton(cursorDevicePagePrevAction);
-		controls.bindToCursorDeviceNextButton(cursorDevicePageNextAction);
+		controls.getKeyboard().bindToCursorDevicePrevKeyRegular(cursorDevicePagePrevAction);
+		controls.getKeyboard().bindToCursorDeviceNextKeyRegular(cursorDevicePageNextAction);
 	}
 }
