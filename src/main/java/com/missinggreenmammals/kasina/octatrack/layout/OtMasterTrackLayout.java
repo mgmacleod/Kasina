@@ -7,11 +7,11 @@ import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 
-public class OTMasterTrackLayout extends OTRegularTrackLayout {
+public class OtMasterTrackLayout extends OtRegularTrackLayout {
 
 	protected Track rootTrackGroup;
 
-	public OTMasterTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
+	public OtMasterTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
 			OTMidiHardwareControls controls) {
 
 		super(host, trackBank, track, cursorTrack, controls);

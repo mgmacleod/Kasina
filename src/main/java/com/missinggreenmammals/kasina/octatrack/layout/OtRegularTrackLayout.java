@@ -12,7 +12,7 @@ import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 
-public class OTRegularTrackLayout extends OTDefaultTrackLayout {
+public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;
 
 	protected final Track track;
@@ -32,7 +32,7 @@ public class OTRegularTrackLayout extends OTDefaultTrackLayout {
 	private final CursorRemoteControlsPage deviceRemotesPage;
 	private final OTMidiHardwareControls controls;
 
-	public OTRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
 			final OTMidiHardwareControls controls) {
 
 		super(host, trackBank);

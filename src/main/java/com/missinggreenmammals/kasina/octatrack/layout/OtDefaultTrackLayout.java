@@ -5,11 +5,11 @@ import com.bitwig.extension.controller.api.TrackBank;
 import com.bitwig.extension.controller.api.Transport;
 import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
 
-public abstract class OTDefaultTrackLayout {
+public abstract class OtDefaultTrackLayout {
 	protected final Transport transport;
 	protected final TrackBank trackBank;
 
-	public OTDefaultTrackLayout(final ControllerHost host, final TrackBank trackBank) {
+	public OtDefaultTrackLayout(final ControllerHost host, final TrackBank trackBank) {
 		transport = host.createTransport();
 		this.trackBank = trackBank;
 
