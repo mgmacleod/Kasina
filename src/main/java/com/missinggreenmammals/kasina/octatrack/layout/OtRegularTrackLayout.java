@@ -10,7 +10,7 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;
@@ -30,10 +30,10 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private final CursorDevice cursorDevice;
 	private final CursorRemoteControlsPage trackRemotesPage;
 	private final CursorRemoteControlsPage deviceRemotesPage;
-	private final OTMidiHardwareControls controls;
+	private final OtMidiHardwareControls controls;
 
 	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
-			final OTMidiHardwareControls controls) {
+			final OtMidiHardwareControls controls) {
 
 		super(host, trackBank);
 		preinitialize(host, trackBank, track, cursorTrack, controls);
@@ -65,11 +65,11 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	}
 
 	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
-			final OTMidiHardwareControls controls) {
+			final OtMidiHardwareControls controls) {
 		return;
 	}
 
-	protected CursorRemoteControlsPage createRemotesPage(final OTMidiHardwareControls controls) {
+	protected CursorRemoteControlsPage createRemotesPage(final OtMidiHardwareControls controls) {
 		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
 				null);
 	}
@@ -95,7 +95,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	}
 
 	@Override
-	public void applyTo(final OTMidiHardwareControls controls) {
+	public void applyTo(final OtMidiHardwareControls controls) {
 		super.applyTo(controls);
 
 		// volume
@@ -120,7 +120,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		controls.getKeyboard().bindToTrackSoloKeyRegular(track.solo().toggleAction());
 	}
 
-	protected void bindSends(final OTMidiHardwareControls controls) {
+	protected void bindSends(final OtMidiHardwareControls controls) {
 		final SendBank sendBank = track.sendBank();
 		controls.getPbEncoder().setBinding(sendBank.getItemAt(0));
 		controls.getAtEncoder().setBinding(sendBank.getItemAt(1));

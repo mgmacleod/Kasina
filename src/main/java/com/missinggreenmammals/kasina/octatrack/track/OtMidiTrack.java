@@ -2,7 +2,7 @@ package com.missinggreenmammals.kasina.octatrack.track;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
 
 public abstract class OtMidiTrack {
@@ -10,10 +10,10 @@ public abstract class OtMidiTrack {
 	protected final String name;
 	protected final HardwareSurface hardwareSurface;
 	protected final ControllerHost host;
-	protected final OTMidiHardwareControls controls;
+	protected final OtMidiHardwareControls controls;
 	protected final OtDefaultTrackLayout layout;
 
-	public OtMidiTrack(final String name, final OTMidiHardwareControls controls, final ControllerHost host,
+	public OtMidiTrack(final String name, final OtMidiHardwareControls controls, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
 
 		this.controls = controls;

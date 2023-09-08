@@ -11,7 +11,7 @@ import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OtMasterTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OtRegularTrackLayout;
@@ -60,7 +60,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		int channel = 8;
 
 		for (int i = 0; i < tracks.length - 1; i++) {
-			final OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+			final OtMidiHardwareControls controls = new OtMidiHardwareControls(channel, track, host, hardwareSurface);
 			final Track bwTrack = trackBank.getItemAt(track - 1);
 			tracks[i] = new OtMidiTrack("TRACK" + track, controls, host, hardwareSurface) {
 				@Override
@@ -76,7 +76,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		// master track
 		track = 8;
 		channel = 15;
-		final OTMidiHardwareControls controls = new OTMidiHardwareControls(channel, track, host, hardwareSurface);
+		final OtMidiHardwareControls controls = new OtMidiHardwareControls(channel, track, host, hardwareSurface);
 		final MasterTrack masterTrack = host.createMasterTrack(0);
 
 		tracks[7] = new OtMidiTrack("MasterTrack", controls, host, hardwareSurface) {

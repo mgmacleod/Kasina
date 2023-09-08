@@ -10,7 +10,7 @@ import com.missinggreenmammals.kasina.octatrack.hardware.keys.OtKeyboard;
 import lombok.Getter;
 
 @Getter
-public class OTMidiHardwareControls {
+public class OtMidiHardwareControls {
 
 	public static final int NUM_CC_ENCODERS = 10;
 
@@ -24,7 +24,7 @@ public class OTMidiHardwareControls {
 
 	private final OtControlChangeEncoder[] ccEncoders;
 
-	public OTMidiHardwareControls(final int midiChannel, final int otTrack, final ControllerHost host,
+	public OtMidiHardwareControls(final int midiChannel, final int otTrack, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
 
 		this.midiChannel = midiChannel;

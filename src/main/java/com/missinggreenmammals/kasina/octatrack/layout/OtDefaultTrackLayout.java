@@ -3,7 +3,7 @@ package com.missinggreenmammals.kasina.octatrack.layout;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.bitwig.extension.controller.api.Transport;
-import com.missinggreenmammals.kasina.octatrack.hardware.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 public abstract class OtDefaultTrackLayout {
 	protected final Transport transport;
@@ -15,7 +15,7 @@ public abstract class OtDefaultTrackLayout {
 
 	}
 
-	public void applyTo(final OTMidiHardwareControls controls) {
+	public void applyTo(final OtMidiHardwareControls controls) {
 
 		controls.getKeyboard().bindToPrevKeyRegular(trackBank.scrollPageBackwardsAction());
 		controls.getKeyboard().bindToNextKeyRegular(trackBank.scrollPageForwardsAction());
