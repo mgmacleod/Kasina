@@ -11,60 +11,29 @@ The idea here is that we want to be able to navigate into and out of device chai
       - it probably makes sense to use the device navigation keys: 
       - shift + next_device = enter device chain
       - shift + prev_device = leave device chain
+        - turns out this isn't strictly necessary; the way I implemented it, just pressing prev_device will return you to the parent, so there's no need for a shift function to leave a chain
+          - which probably means I should change the binding to a single key, maybe the remote mode change key
 
 ## Navigating device chains
-- we already have a `CursorDevice` per track
-  - `CursorDevice` extends both `Cursor` and `Device`
-    - `Device.getCursorSlot()` returns a `DeviceSlot`, which extends `DeviceChain` and "represent nested FX slots in devices"
-    - `Device.deviceChain()` returns the chain containing the current device
-- Given that, it seems like the following should work:
-  - call `getCursorSlot()` on the cursorDevice to enter a chain
-    - once inside, use `DeviceSlot.createDeviceBank(1)` to create a `DeviceBank` with a single device
-      - but of course, `create` methods need to be called during initialization, so this approach won't work
-    - use `DeviceBank.scrollPageDown()` and `DeviceBank.scrollPageUp()` to move back and forth
-    - use `DeviceBank.getItemAt(0)` to get the current `Device`
-      - should be able to select it with `Device.selectInEditor()`, though I feel like I tried that with the `CursorDevice` without luck, but we'll see
-  - call `deviceChain()` on the current device in the chain to get back out
-    - although this then lands you in a `DeviceChain`, rather than the previously selected device from before entering the chain (moreover, it's not the 'parent' chain, but just current one)
-      - a few possibilities here
-        - use the same approach as above and create a `DeviceBank` on the chain and move around that way
-          - not exactly clear on how to do this at run time
-        - somehow store the start point and return to it when leaving the chain
-          - but this assumes we can easily determine when it's appropriate to return to the starting point
-            - if we have multiply nested devices, it will be tricky to keep track of where we are; so the former is probably the better approach
-          - one thing that works but is a bit janky is to create a `DeviceBank` of size 1 on the `Track` and then select this device (which will be the first in the track) to get back out of the chain
-            - this is fine if you only go one level into a set of nested chains, but it very frustrating if your a few levels in and then you get spit back out at the beginning
-      - ha! it's ridiculously easy! `CursorDevice.selectParent()` :D
-- There are some other methods of the `Device` interface that might be useful here
-  - `isNested()` to determine if a device is part of a nested device chain in an FX slot
-  - `hasSlots()` to determine if a device has FX slots to navigate
-    - hmm, the JavaDocs here say "Use {@link #slotNames()} to get a list of available slot names, and navigate to devices in those slots using the {@link CursorDevice} interface."
-      - not clear how that would work
-        - ah, that would probably be methods like `CursorDevice.selectFirstInSlot(String)`
-      - Still not quite sure how to get a `CursorDevice` in this context
-        - oh, of course. We should already have it since we have one to navigate the devices in the 'main' chain on the track
-          - so we can call `hasSlots()` and `slotNames()` on it and then `selectFirstInSlot(String)`
+[detailed notes](./navigating-device-chains.md)
+
+### multiple device chains
+[detailed note](./navigating-multiple-device-chains.md)
+
+### Is it possible to show current nested chain on the screen via the API?
+- basic navigation of the device chains now works, but it's quite difficult to tell where you are if the chain is not expanded/visible
+- there's `CursorDeviceSlot` which extends `DeviceChain` and has a `selectSlot(String slot)` method
+  - however, it doesn't seem to be returned from anything else in the API
+    - no other extensions seem to use it
+    - it is also not the type returned from `CursorDevice.deviceChain()` when in a slot/nested chain
+- I haven't been about to find anything else of use so far in my spelunking of the API
+  - might ask on KVR
+
+
+## Other similar forms of navigation (layers, selectors, drum pads)
+- `Device` has similar methods to the above for working with layers, selectors, drum pads and the like (e.g., `hasLayers()`, `hasDrumPads()`), although it seems there isn't an equivalent to `slotNames()` for these and you have to navigate them by banks
+  - however, `CursorDevice` does have similar `selectFirstIn*(..)` methods 
+
 
 ## Shift mode design
-
-### Basic requirements
-- when the presses a key regularly, the primary function is executed
-- when the user holds the shift key and presses some other key, the secondary function is executed
-  - if there is no secondary function assigned, nothing happens
-- that's about it, I guess. It's a shift key!
-
-### Implementation plan
-- this will likely take the same basic approach as for switching between device and track remote control modes
-  - there, we just swapped out the bindings in a fairly inelegant way
-  - this is an opportunity to revisit that and put something better in place
-    - Indeed, the shift function will ultimately extend to all the keys, so this will need to be thought out more clearly
-- create
-  - objects to represent the hardware elements more directly
-    - a `Key` hierarchy to represent trig keys and shift key, and organized into a `Keyboard` object
-      - a subclass here can be the shift key, which is like a regular key in some ways
-        - the shift key needs additional bindings, as well need to respond to note on and note off events
-      - trig keys should contain two bindings, one for regular and one for shift modes
-      - the keyboard should manage switching between shift modes for all keys
-        - of course, there will be a keyboard per track
-    - an `Encoder` hierarchy and an appropriate container
-    - 
+[detailed notes](shift-mode-design.md)
