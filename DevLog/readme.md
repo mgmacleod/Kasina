@@ -11,4 +11,5 @@ A place to gather and organize development and implementation notes. Whenever an
 - [13-explore-the-scenery](./13-explore-the-scenery/13-explore-the-scenery-devlog.md)
 - [15-add-track-mute-and-solo-buttons](./15-add-track-mute-and-solo-buttons/15-add-track-mute-and-solo-buttons.md)
 - [20-ot-scenes-default-to-1-on-initialization](./20-ot-scenes-default-to-1-on-initialization/20-ot-scenes-default-to-1-on-initialization.md)
+- [22-look-into-different-navigation-modes-for-track-banks](./22-look-into-different-navigation-modes-for-track-banks/22-look-into-different-navigation-modes-for-track-banks.md)
 - [30-expand-navigation-of-remote-controls-on-devices](./30-expand-navigation-of-remote-controls-on-devices/30-expand-navigation-of-remote-controls-on-devices.md)
