@@ -2,18 +2,18 @@ package com.missinggreenmammals.kasina.octatrack.track;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
-import com.missinggreenmammals.kasina.octatrack.layout.OTMidiTrackLayout;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
 
-public abstract class OTMidiTrack {
+public abstract class OtMidiTrack {
 
 	protected final String name;
 	protected final HardwareSurface hardwareSurface;
 	protected final ControllerHost host;
-	protected final OTMidiHardwareControls controls;
-	protected final OTMidiTrackLayout layout;
+	protected final OtMidiHardwareControls controls;
+	protected final OtDefaultTrackLayout layout;
 
-	public OTMidiTrack(final String name, OTMidiHardwareControls controls, final ControllerHost host,
+	public OtMidiTrack(final String name, final OtMidiHardwareControls controls, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
 
 		this.controls = controls;
@@ -23,8 +23,10 @@ public abstract class OTMidiTrack {
 
 		layout = createLayout(host);
 		layout.applyTo(controls);
+
+		controls.getKeyboard().disableShiftMode();
 	}
 
-	protected abstract OTMidiTrackLayout createLayout(ControllerHost host);
+	protected abstract OtDefaultTrackLayout createLayout(ControllerHost host);
 
 }

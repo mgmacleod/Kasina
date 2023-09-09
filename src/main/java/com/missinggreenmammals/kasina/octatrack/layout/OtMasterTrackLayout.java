@@ -5,14 +5,14 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.OTMidiHardwareControls;
+import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
-public class OTMasterTrackLayout extends OTRegularTrackLayout {
+public class OtMasterTrackLayout extends OtRegularTrackLayout {
 
 	protected Track rootTrackGroup;
 
-	public OTMasterTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
-			OTMidiHardwareControls controls) {
+	public OtMasterTrackLayout(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
+			OtMidiHardwareControls controls) {
 
 		super(host, trackBank, track, cursorTrack, controls);
 
@@ -20,18 +20,18 @@ public class OTMasterTrackLayout extends OTRegularTrackLayout {
 
 	@Override
 	protected void preinitialize(ControllerHost host, TrackBank trackBank, Track track, CursorTrack cursorTrack,
-			OTMidiHardwareControls controls) {
+			OtMidiHardwareControls controls) {
 
 		rootTrackGroup = host.getProject().getRootTrackGroup();
 	}
 
 
 	@Override
-	protected CursorRemoteControlsPage createRemotesPage(OTMidiHardwareControls controls) {
+	protected CursorRemoteControlsPage createRemotesPage(OtMidiHardwareControls controls) {
 		return rootTrackGroup.createCursorRemoteControlsPage("project-remotes", REMOTE_PAGE_SIZE, null);
 	}
 
-	protected void bindSends(OTMidiHardwareControls controls) {
+	protected void bindSends(OtMidiHardwareControls controls) {
 		// override to do nothing, as there are no sends on the master track in BW
 	}
 
