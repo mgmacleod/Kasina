@@ -38,10 +38,10 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
 
-		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
-
-		trackBank.followCursorTrack(cursorTrack);
+		trackBank = cursorTrack.createSiblingsTrackBank(7, 2, 0, false, true);
+		trackBank.setSkipDisabledItems(true);
+		trackBank.cursorIndex().markInterested();
 
 		final MidiIn midiIn = host.getMidiInPort(0);
 
