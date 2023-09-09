@@ -42,6 +42,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
 
 		trackBank.followCursorTrack(cursorTrack);
+		trackBank.setSkipDisabledItems(true);
 
 		final MidiIn midiIn = host.getMidiInPort(0);
 
