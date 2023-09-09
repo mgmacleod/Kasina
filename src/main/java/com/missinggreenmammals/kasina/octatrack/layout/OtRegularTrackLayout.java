@@ -59,7 +59,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 
 		// Create actions
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
-		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
+		selectTrackAction = host.createAction(this::handleTrackSelectionAction, () -> "selectInMixer");
 		enterChainAction = host.createAction(this::enterDeviceChain, () -> "enterDeviceChain");
 		enterGroupAction = host.createAction(this::enterGroup, () -> "enterGroup");
 		exitGroupAction = host.createAction(this::exitGroup, () -> "exitGroup");
@@ -234,6 +234,10 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		controls.getAtEncoder().setBinding(sendBank.getItemAt(1));
 	}
 
+	private void handleTrackSelectionAction(final double value) {
+		track.selectInMixer();
+		trackBank.scrollIntoView(trackBank.cursorIndex().get());
+	}
 
 	private void initForTrackRemotes(final CursorRemoteControlsPage controlsPage,
 			final HardwareBindable selectPrevAction, final HardwareBindable selectNextAction) {
