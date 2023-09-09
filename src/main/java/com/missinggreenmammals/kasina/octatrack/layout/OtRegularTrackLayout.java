@@ -8,11 +8,14 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
-import com.bitwig.extension.controller.api.StringArrayValue;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
+/**
+ * An {@link OtDefaultTrackLayout} to represent a regular track in Bitwig (i.e.,
+ * not an FX track or the master track)
+ */
 public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;
 
@@ -25,7 +28,6 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private final HardwareBindable cursorDevicePagePrevAction;
 	private final HardwareBindable cursorDevicePageNextAction;
 	private final HardwareBindable enterChainAction;
-	private final HardwareBindable leaveChainAction;
 
 	protected final Track track;
 	protected final CursorTrack cursorTrack;
@@ -35,8 +37,10 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private final CursorRemoteControlsPage deviceRemotesPage;
 
 	private final OtMidiHardwareControls controls;
-
 	private final AtomicBoolean trackRemoteMode;
+
+	private String[] currentDeviceSlotNames;
+	private int currentDeviceSlotIndex;
 
 	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
@@ -52,18 +56,12 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
 		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
 		enterChainAction = host.createAction(this::enterDeviceChain, () -> "enterDeviceChain");
-		leaveChainAction = host.createAction(this::leaveDeviceChain, () -> "leaveDeviceChain");
 		
 		trackRemoteMode = new AtomicBoolean(true);
 
 		// Configure CursorDevice
 		cursorDevice = track.createCursorDevice("Primary");
-		cursorDevice.hasSlots().markInterested();
-		cursorDevice.slotNames().markInterested();
-		cursorDevice.name().markInterested();
-		cursorDevice.hasNext().markInterested();
-		cursorDevice.hasPrevious().markInterested();
-		cursorDevice.isNested().markInterested();
+		configureCursorDevice();
 
 		deviceRemotesPage = cursorDevice
 				.createCursorRemoteControlsPage("device-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
@@ -76,60 +74,13 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		trackRemotePageNextAction = trackRemotesPage.selectNextAction();
 		deviceRemotePagePrevAction = deviceRemotesPage.selectPreviousAction();
 		deviceRemotePageNextAction = deviceRemotesPage.selectNextAction();
-		cursorDevicePagePrevAction = cursorDevice.selectPreviousAction();
-		cursorDevicePageNextAction = cursorDevice.selectNextAction();
+		cursorDevicePagePrevAction = host.createAction(this::handleCursorDevicePreviousAction,
+				() -> "handlePreviousAction");
+		cursorDevicePageNextAction = host.createAction(this::handleCursorDeviceNextAction, () -> "handleNextAction");
 		
-
+		initCurrentDeviceSlotProperties();
 		initShiftBindings();
 		
-	}
-
-	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
-			final OtMidiHardwareControls controls) {
-		return;
-	}
-
-	protected CursorRemoteControlsPage createRemotesPage(final OtMidiHardwareControls controls) {
-		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
-				null);
-	}
-	
-	private void initShiftBindings() {
-		controls.getKeyboard().bindToCursorDeviceNextKeyShift(enterChainAction);
-		controls.getKeyboard().bindToCursorDevicePrevKeyShift(leaveChainAction);
-	}
-	
-	private void enterDeviceChain(final double value) {
-		if (cursorDevice.hasSlots().get()) {
-			final StringArrayValue slotNames = cursorDevice.slotNames();
-			final String[] slots = slotNames.get();
-			final String slot = slots[0];
-			cursorDevice.selectFirstInSlot(slot);
-		}
-	}
-
-	private void leaveDeviceChain(final double value) {
-		cursorDevice.selectParent();
-	}
-
-	private String remoteModeChangeDescription() {
-		return "Toggle remote control mode";
-	}
-
-	private void handleRemoteModeChange(final double value) {
-		final boolean oldMode = trackRemoteMode.get();
-		trackRemoteMode.set(!oldMode);
-
-		if (oldMode) {
-			// track remote mode becoming device mode, so switch to device
-			initForDeviceRemotes(deviceRemotesPage, cursorDevice);
-		} else {
-			// device remote mode becoming track, so switch to track
-			initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
-		}
-
-		controls.getKeyboard().disableShiftMode();
-
 	}
 
 	@Override
@@ -150,12 +101,100 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 
 		// default to track remote mode
 		initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
-		
+
 		// track commands: select, record enable, mute, and solo
 		controls.getKeyboard().bindToSelectTrackKeyRegular(selectTrackAction);
 		controls.getKeyboard().bindToTrackRecordEnableKeyRegular(track.arm().toggleAction());
 		controls.getKeyboard().bindToTrackMuteKeyRegular(track.mute().toggleAction());
 		controls.getKeyboard().bindToTrackSoloKeyRegular(track.solo().toggleAction());
+	}
+
+	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+			final OtMidiHardwareControls controls) {
+		return;
+	}
+
+	protected CursorRemoteControlsPage createRemotesPage(final OtMidiHardwareControls controls) {
+		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
+				null);
+	}
+	
+	private void configureCursorDevice() {
+		cursorDevice.hasSlots().markInterested();
+		cursorDevice.slotNames().markInterested();
+		cursorDevice.hasNext().markInterested();
+		cursorDevice.hasPrevious().markInterested();
+	}
+
+	private void initShiftBindings() {
+		controls.getKeyboard().bindToCursorDeviceNextKeyShift(enterChainAction);
+	}
+	
+	private void enterDeviceChain(final double value) {
+		if (cursorDevice.hasSlots().get()) {
+			currentDeviceSlotNames = cursorDevice.slotNames().get();
+			final String slot = currentDeviceSlotNames[0];
+			currentDeviceSlotIndex = 0;
+
+			cursorDevice.selectFirstInSlot(slot);
+		}
+	}
+
+	private String remoteModeChangeDescription() {
+		return "Toggle remote control mode";
+	}
+
+	private void handleRemoteModeChange(final double value) {
+		final boolean oldMode = trackRemoteMode.get();
+		trackRemoteMode.set(!oldMode);
+
+		if (oldMode) {
+			// track remote mode becoming device mode, so switch to device
+			initForDeviceRemotes(deviceRemotesPage, cursorDevice);
+		} else {
+			// device remote mode becoming track, so switch to track
+			initForTrackRemotes(trackRemotesPage, trackRemotePagePrevAction, trackRemotePageNextAction);
+		}
+
+		controls.getKeyboard().disableShiftMode();
+	}
+
+	private void handleCursorDevicePreviousAction(final double value) {
+		if (cursorDevice.hasPrevious().get()) {
+			cursorDevice.selectPrevious();
+			return;
+		}
+
+		if (currentDeviceSlotNames != null && (currentDeviceSlotIndex - 1) >= 0) {
+			final String slot = currentDeviceSlotNames[--currentDeviceSlotIndex];
+			cursorDevice.selectParent();
+			cursorDevice.selectLastInSlot(slot);
+
+			return;
+		}
+
+		cursorDevice.selectParent();
+		initCurrentDeviceSlotProperties();
+	}
+
+	private void initCurrentDeviceSlotProperties() {
+		currentDeviceSlotIndex = -1;
+		currentDeviceSlotNames = null;
+	}
+
+	private void handleCursorDeviceNextAction(final double value) {
+		if (cursorDevice.hasNext().get()) {
+			cursorDevice.selectNext();
+			return;
+		}
+
+		if (currentDeviceSlotNames != null && (currentDeviceSlotIndex + 1) < currentDeviceSlotNames.length) {
+			final String slot = currentDeviceSlotNames[++currentDeviceSlotIndex];
+			cursorDevice.selectParent();
+			cursorDevice.selectFirstInSlot(slot);
+
+			return;
+		}
 	}
 
 	protected void bindSends(final OtMidiHardwareControls controls) {
