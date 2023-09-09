@@ -38,8 +38,8 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
 
-		trackBank = host.createMainTrackBank(7, 2, 0);
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
+		trackBank = host.getProject().getRootTrackGroup().createMainTrackBank(7, 2, 0, false);
 
 		trackBank.followCursorTrack(cursorTrack);
 		trackBank.setSkipDisabledItems(true);

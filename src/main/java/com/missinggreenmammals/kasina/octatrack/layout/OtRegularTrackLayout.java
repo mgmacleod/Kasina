@@ -28,7 +28,10 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private final HardwareBindable cursorDevicePagePrevAction;
 	private final HardwareBindable cursorDevicePageNextAction;
 	private final HardwareBindable enterChainAction;
+	private final HardwareBindable enterGroupAction;
+	private final HardwareBindable exitGroupAction;
 
+	protected final ControllerHost host;
 	protected final Track track;
 	protected final CursorTrack cursorTrack;
 
@@ -49,13 +52,17 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		preinitialize(host, trackBank, track, cursorTrack, controls);
 
 		this.controls = controls;
+		this.host = host;
 		this.cursorTrack = cursorTrack;
 		this.track = track;
+		configureTrack();
 
 		// Create actions
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
 		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
 		enterChainAction = host.createAction(this::enterDeviceChain, () -> "enterDeviceChain");
+		enterGroupAction = host.createAction(this::enterGroup, () -> "enterGroup");
+		exitGroupAction = host.createAction(this::exitGroup, () -> "exitGroup");
 		
 		trackRemoteMode = new AtomicBoolean(true);
 
@@ -126,8 +133,15 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		cursorDevice.hasPrevious().markInterested();
 	}
 
+	private void configureTrack() {
+		track.isGroup().markInterested();
+		track.isGroupExpanded().markInterested();
+	}
+
 	private void initShiftBindings() {
 		controls.getKeyboard().bindToCursorDeviceNextKeyShift(enterChainAction);
+		controls.getKeyboard().bindToNextKeyShift(enterGroupAction);
+		controls.getKeyboard().bindToPrevKeyShift(exitGroupAction);
 	}
 	
 	private void enterDeviceChain(final double value) {
@@ -138,6 +152,23 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 
 			cursorDevice.selectFirstInSlot(slot);
 		}
+	}
+
+	private void enterGroup(final double value) {
+		// Don't enter a non-group
+		if (!track.isGroup().get()) {
+			return;
+		}
+
+		// First select the track
+		track.selectInMixer();
+
+		// Then wait a bit and enter
+		host.scheduleTask(cursorTrack::selectFirstChild, 100);
+	}
+
+	private void exitGroup(final double value) {
+		cursorTrack.selectParent();
 	}
 
 	private String remoteModeChangeDescription() {
