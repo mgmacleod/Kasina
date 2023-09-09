@@ -8,6 +8,7 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
+import com.bitwig.extension.controller.api.StringArrayValue;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
@@ -15,8 +16,6 @@ import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	public static final int REMOTE_PAGE_SIZE = 8;
 
-	protected final Track track;
-	protected final CursorTrack cursorTrack;
 	private final HardwareBindable remoteModeChangeAction;
 	private final HardwareBindable selectTrackAction;
 	private final HardwareBindable trackRemotePagePrevAction;
@@ -25,12 +24,19 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private final HardwareBindable deviceRemotePageNextAction;
 	private final HardwareBindable cursorDevicePagePrevAction;
 	private final HardwareBindable cursorDevicePageNextAction;
+	private final HardwareBindable enterChainAction;
+	private final HardwareBindable leaveChainAction;
 
-	private final AtomicBoolean trackRemoteMode;
+	protected final Track track;
+	protected final CursorTrack cursorTrack;
+
 	private final CursorDevice cursorDevice;
 	private final CursorRemoteControlsPage trackRemotesPage;
 	private final CursorRemoteControlsPage deviceRemotesPage;
+
 	private final OtMidiHardwareControls controls;
+
+	private final AtomicBoolean trackRemoteMode;
 
 	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
@@ -41,12 +47,23 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		this.controls = controls;
 		this.cursorTrack = cursorTrack;
 		this.track = track;
+
+		// Create actions
 		remoteModeChangeAction = host.createAction(this::handleRemoteModeChange, this::remoteModeChangeDescription);
 		selectTrackAction = host.createAction((value) -> track.selectInMixer(), () -> "selectInMixer");
-
-		trackRemoteMode = new AtomicBoolean(true);
-		cursorDevice = track.createCursorDevice("Primary");
+		enterChainAction = host.createAction(this::enterDeviceChain, () -> "enterDeviceChain");
+		leaveChainAction = host.createAction(this::leaveDeviceChain, () -> "leaveDeviceChain");
 		
+		trackRemoteMode = new AtomicBoolean(true);
+
+		// Configure CursorDevice
+		cursorDevice = track.createCursorDevice("Primary");
+		cursorDevice.hasSlots().markInterested();
+		cursorDevice.slotNames().markInterested();
+		cursorDevice.name().markInterested();
+		cursorDevice.hasNext().markInterested();
+		cursorDevice.hasPrevious().markInterested();
+		cursorDevice.isNested().markInterested();
 
 		deviceRemotesPage = cursorDevice
 				.createCursorRemoteControlsPage("device-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
@@ -62,6 +79,9 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		cursorDevicePagePrevAction = cursorDevice.selectPreviousAction();
 		cursorDevicePageNextAction = cursorDevice.selectNextAction();
 		
+
+		initShiftBindings();
+		
 	}
 
 	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
@@ -72,6 +92,26 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	protected CursorRemoteControlsPage createRemotesPage(final OtMidiHardwareControls controls) {
 		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
 				null);
+	}
+	
+	private void initShiftBindings() {
+		controls.getKeyboard().bindToCursorDeviceNextKeyShift(enterChainAction);
+		controls.getKeyboard().bindToCursorDevicePrevKeyShift(leaveChainAction);
+	}
+	
+	private void enterDeviceChain(final double value) {
+		if (cursorDevice.hasSlots().get()) {
+//			previousDevice = deviceBank.getItemAt(0);
+			final StringArrayValue slotNames = cursorDevice.slotNames();
+			final String[] slots = slotNames.get();
+			final String slot = slots[0];
+			cursorDevice.selectFirstInSlot(slot);
+		}
+	}
+
+	private void leaveDeviceChain(final double value) {
+		// I still have no idea how to do this! :(
+		cursorDevice.selectParent();
 	}
 
 	private String remoteModeChangeDescription() {
