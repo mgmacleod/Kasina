@@ -101,7 +101,6 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	
 	private void enterDeviceChain(final double value) {
 		if (cursorDevice.hasSlots().get()) {
-//			previousDevice = deviceBank.getItemAt(0);
 			final StringArrayValue slotNames = cursorDevice.slotNames();
 			final String[] slots = slotNames.get();
 			final String slot = slots[0];
@@ -110,7 +109,6 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	}
 
 	private void leaveDeviceChain(final double value) {
-		// I still have no idea how to do this! :(
 		cursorDevice.selectParent();
 	}
 
