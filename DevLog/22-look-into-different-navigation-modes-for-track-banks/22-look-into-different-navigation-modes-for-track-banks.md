@@ -9,6 +9,12 @@ The goal here is to have the track bank not necessarily include all the tracks i
   - calling it on the cursor track doesn't work; there's effectively no track bank then (no indications of controlled tracks)
   - calling it on the root group does work at least from the perspective of excluding group tracks
     - however, it also seems to prevent the track group from moving into the group when the latter is entered
+      - actually, it's not due to the use of the root group, as the same thing happens if we set `hasFlatTrackList` to true or use the previous `ControllerHost` method for creating the bank that doesn't take that parameter
+        - in these cases, the bank of course still crosses the group boundaries, but it does not 
+- it took some digging, but DrivenByMoss to the rescue again
+  - `de.mossgrabers.bitwig.framework.daw.ModelImpl` line 124 has
+    - `tb = this.bwCursorTrack.createSiblingsTrackBank (numTracks, numSends, numScenes, false, false);`
+    - I have no idea what a sibling track is and the JavaDocs don't say, but let's see what happens!
 
 ## Entering and exiting group tracks
 - this also looks to be straightforward
