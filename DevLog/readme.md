@@ -8,6 +8,7 @@ A place to gather and organize development and implementation notes. Whenever an
 
 - [1-finish-basic-mapping-options](./1-finish-basic-mapping-options/1-finish-basic-mapping-options-devlog.md)
 - [9-brainstorm-uses-for-remaining-controls](./9-brainstorm-uses-for-remaining-controls/9-brainstorm-uses-for-remaining-controls-devlog.md)
+- [11-look-into-bulk-upload-and-download-of-cc-values](./11-look-into-bulk-upload-and-download-of-cc-values/11-look-into-bulk-upload-and-download-of-cc-values.md)
 - [13-explore-the-scenery](./13-explore-the-scenery/13-explore-the-scenery-devlog.md)
 - [15-add-track-mute-and-solo-buttons](./15-add-track-mute-and-solo-buttons/15-add-track-mute-and-solo-buttons.md)
 - [20-ot-scenes-default-to-1-on-initialization](./20-ot-scenes-default-to-1-on-initialization/20-ot-scenes-default-to-1-on-initialization.md)
