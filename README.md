@@ -6,6 +6,9 @@ Extensions for Bitwig Studio that try to look deeply into what makes a piece of 
 
 ***NOTE: This is a personal project and very much a work in progress. I hope it might be useful to others, but the intention isn't to create a general purpose extension that meets everyone's needs. That said, comments and suggestions are welcome. Create a issue if you have an idea or run into an problem.*** 
 
+## Download
+
+You can download the latest version from the [Releases section](https://github.com/mgmacleod/Kasina/releases).
 
 # Devices
 
@@ -17,7 +20,7 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
 
 
 ### Features
-- Control basic transport functions 
+- Control basic transport functions (Arranger only for now)
   - play
   - stop
   - record
@@ -39,23 +42,17 @@ This extension uses the MIDI side of the Octatrack to turn it into a powerful co
   - trig keys toggle between track and device modes
     - in device mode, an additional set of trig keys scroll through the devices on the track
 - Advanced features
-  - This is a little less polished and requires a few hacks to make it work, but they are well worth the potential offered by the **integration of the Octatrack's scenes into Bitwig's modulation system**. Yes, that means what you think it means. With this extension, you can use modulators in bitwig to assign parameters from native and plugin devices to the scenes of your beloved Octatrack!
-    - There are rough edges to some out, but it is currently workable. 
-  - Many more things planned 
-    - additional features for the MIDI side of the OT to act as a controller for Bitwig
-    - what's to be gained by expanding the extension to incorporate elements of the Audio side?
+  - OT scenes integration
+    - This requires a few hacks to make it work, but they are well worth the potential offered by the **integration of the Octatrack's scenes into Bitwig's modulation system**. With this extension, you can use modulators in bitwig to assign parameters from native and plugin devices to the scenes of the Octatrack!
 
 
-## Korg Kaoss Pad KP3+ (not yet started)
-- this SOB has a MIDI side too, ya know! 
-  - Mapping it to XY FX is a no-brainer
-  - more advanced and more like the OT above: map the XY params to 4 modulators and morph effects in the bitwig environment (again, but a bit different!)
+More complete documentation in the works and will be available in a [separate repo](https://github.com/mgmacleod/Kasina-Documentation).
 
-## Other devices and possible experimental subjects
+## Other devices and possible experimental subjects (not yet started)
+- Korg Kaoss Pad KP3+ (MIDI side)
 - Novation LaunchPad Pro MKI
 - Novation LaunchControl XL
 - Ableton Push 2
 - NI Maschine MK3
 - Arturia Beatstep Pro
 - Keith McMillen SoftStep 2
-- Various other odds and ends
