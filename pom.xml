@@ -6,7 +6,7 @@
 	<artifactId>kasina</artifactId>
 	<packaging>jar</packaging>
 	<name>Kasina</name>
-	<version>0.1</version>
+	<version>0.2</version>
 	
 	<repositories>
        <repository>
@@ -15,12 +15,21 @@
          <url>https://maven.bitwig.com</url>
        </repository>
    </repositories>
+   <properties>
+	   <lombok.version>1.18.28</lombok.version>
+   </properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.bitwig</groupId>
 			<artifactId>extension-api</artifactId>
 			<version>18</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -64,7 +73,7 @@
 				<version>3.5.0</version>
 				<configuration>
 					<descriptors>
-						<descriptor>src/assembly/dist.xml</descriptor>
+						<descriptor>src/main/assembly/dist.xml</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>
