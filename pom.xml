@@ -6,7 +6,7 @@
 	<artifactId>kasina</artifactId>
 	<packaging>jar</packaging>
 	<name>Kasina</name>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 	
 	<repositories>
        <repository>
@@ -73,7 +73,7 @@
 				<version>3.5.0</version>
 				<configuration>
 					<descriptors>
-						<descriptor>src/assembly/dist.xml</descriptor>
+						<descriptor>src/main/assembly/dist.xml</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>
