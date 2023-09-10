@@ -9,6 +9,13 @@ import com.missinggreenmammals.kasina.octatrack.hardware.keys.OtKeyboard;
 
 import lombok.Getter;
 
+/**
+ * Represents the hardware controls on the Octatrack. Leverages
+ * {@link OtKeyboard} to receive messages from the trig keys and page key, which
+ * is used as a shift key. Also represents all of the encoders and handles their
+ * messages. Doesn't deal with Bitwig functionality directly but is focused on
+ * hardware communication.
+ */
 @Getter
 public class OtMidiHardwareControls {
 

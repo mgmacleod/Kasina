@@ -17,7 +17,21 @@ import com.missinggreenmammals.kasina.octatrack.layout.OtMasterTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OtRegularTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.track.OtMidiTrack;
 
+/**
+ * Represents the configuration of the Octatrack. It's main purpose is to bring
+ * together instances of {@link OtMidiHardwareControls} and
+ * {@link OtDefaultTrackLayout} inside an {@link OtMidiTrack}. Manages most of
+ * the configuration of the Bitwig components used; however, some of that is
+ * delegated to the classes above.
+ * <p>
+ * This class also handles the integration between the Octatrack scenes and the
+ * Bitwig modulation system.
+ */
 public class OtDefaultConfiguration extends OtMidiConfiguration {
+
+	public static final int TRACK_BANK_SIZE = 8;
+	public static final int NUM_SENDS = 2;
+	public static final int NUM_SCENES = 0;
 
 	private static final int CFP_CHANNEL = 0;
 	private static final int CFP_CC_NUMBER = 48;
@@ -38,8 +52,8 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
 
-		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", 2, 0, true);
-		trackBank = cursorTrack.createSiblingsTrackBank(7, 2, 0, false, true);
+		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", NUM_SENDS, NUM_SCENES, true);
+		trackBank = cursorTrack.createSiblingsTrackBank(TRACK_BANK_SIZE, NUM_SENDS, NUM_SCENES, false, true);
 		trackBank.setSkipDisabledItems(true);
 		trackBank.cursorIndex().markInterested();
 

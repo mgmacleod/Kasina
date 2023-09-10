@@ -5,6 +5,11 @@ import com.bitwig.extension.controller.api.HardwareSurface;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
 
+/**
+ * Represents a MIDI track on the OT. Links an {@link OtDefaultTrackLayout} with
+ * an {@link OtMidiHardwareControls} instance to connect Bitwig functionality of
+ * the former with hardware actions from the latter.
+ */
 public abstract class OtMidiTrack {
 
 	protected final String name;

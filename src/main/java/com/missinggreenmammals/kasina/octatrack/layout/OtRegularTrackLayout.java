@@ -242,14 +242,16 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private void initForTrackRemotes(final CursorRemoteControlsPage controlsPage,
 			final HardwareBindable selectPrevAction, final HardwareBindable selectNextAction) {
 		
+		/*
+		 * Bind encoders to remote controls. It looks a little wonky because of the fact
+		 * that we use CC encoders 0 and 3 for volume and pan, respectively
+		 */
 		controls.getCcEncoders()[1].setBinding(controlsPage.getParameter(0));
 		controls.getCcEncoders()[2].setBinding(controlsPage.getParameter(1));
-		controls.getCcEncoders()[4].setBinding(controlsPage.getParameter(2));
-		controls.getCcEncoders()[5].setBinding(controlsPage.getParameter(3));
-		controls.getCcEncoders()[6].setBinding(controlsPage.getParameter(4));
-		controls.getCcEncoders()[7].setBinding(controlsPage.getParameter(5));
-		controls.getCcEncoders()[8].setBinding(controlsPage.getParameter(6));
-		controls.getCcEncoders()[9].setBinding(controlsPage.getParameter(7));
+
+		for (int i = 2; i < REMOTE_PAGE_SIZE; i++) {
+			controls.getCcEncoders()[i + 2].setBinding(controlsPage.getParameter(i));
+		}
 
 		controls.getKeyboard().bindToRemotePagePrevKeyRegular(selectPrevAction);
 		controls.getKeyboard().bindToRemotePageNextKeyRegular(selectNextAction);
