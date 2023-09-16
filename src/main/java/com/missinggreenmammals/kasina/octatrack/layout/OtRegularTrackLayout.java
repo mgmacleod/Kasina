@@ -10,6 +10,7 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
+import com.bitwig.extension.controller.api.Transport;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 /**
@@ -45,10 +46,11 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private String[] currentDeviceSlotNames;
 	private int currentDeviceSlotIndex;
 
-	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Transport transport,
+			final Track track, final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
 
-		super(host, trackBank);
+		super(host, trackBank, transport);
 		preinitialize(host, trackBank, track, cursorTrack, controls);
 
 		this.controls = controls;

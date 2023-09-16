@@ -15,8 +15,8 @@ public abstract class OtDefaultTrackLayout {
 	protected final Transport transport;
 	protected final TrackBank trackBank;
 
-	public OtDefaultTrackLayout(final ControllerHost host, final TrackBank trackBank) {
-		transport = host.createTransport();
+	public OtDefaultTrackLayout(final ControllerHost host, final TrackBank trackBank, final Transport transport) {
+		this.transport = transport;
 		this.trackBank = trackBank;
 	}
 

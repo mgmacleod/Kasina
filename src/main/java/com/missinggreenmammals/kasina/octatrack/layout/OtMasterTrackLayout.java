@@ -5,6 +5,7 @@ import com.bitwig.extension.controller.api.CursorRemoteControlsPage;
 import com.bitwig.extension.controller.api.CursorTrack;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
+import com.bitwig.extension.controller.api.Transport;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 /**
@@ -16,10 +17,11 @@ public class OtMasterTrackLayout extends OtRegularTrackLayout {
 
 	protected Track rootTrackGroup;
 
-	public OtMasterTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+	public OtMasterTrackLayout(final ControllerHost host, final TrackBank trackBank, final Transport transport,
+			final Track track, final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
 
-		super(host, trackBank, track, cursorTrack, controls);
+		super(host, trackBank, transport, track, cursorTrack, controls);
 
 	}
 

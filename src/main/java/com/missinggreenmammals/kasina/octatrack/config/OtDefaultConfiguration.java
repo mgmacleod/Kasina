@@ -11,6 +11,7 @@ import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
+import com.bitwig.extension.controller.api.Transport;
 import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
 import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
 import com.missinggreenmammals.kasina.octatrack.layout.OtMasterTrackLayout;
@@ -42,6 +43,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 	protected TrackBank trackBank;
 	protected CursorTrack cursorTrack;
 	private final NoteInput noteInput;
+	private final Transport transport;
 
 	private AtomicInteger asChannel;
 	private AtomicInteger bsChannel;
@@ -52,10 +54,12 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		bsChannel = new AtomicInteger(8);
 		cfp = new AtomicInteger(0);
 
+		transport = host.createTransport();
 		cursorTrack = host.createCursorTrack("OT_CURSOR_TRACK", "Cursor track", NUM_SENDS, NUM_SCENES, true);
 		trackBank = cursorTrack.createSiblingsTrackBank(TRACK_BANK_SIZE, NUM_SENDS, NUM_SCENES, false, true);
 		trackBank.setSkipDisabledItems(true);
 		trackBank.cursorIndex().markInterested();
+
 
 		final MidiIn midiIn = host.getMidiInPort(0);
 
@@ -79,7 +83,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 			tracks[i] = new OtMidiTrack("TRACK" + track, controls, host, hardwareSurface) {
 				@Override
 				protected OtDefaultTrackLayout createLayout(final ControllerHost host) {
-					return new OtRegularTrackLayout(host, trackBank, bwTrack, cursorTrack, controls);
+					return new OtRegularTrackLayout(host, trackBank, transport, bwTrack, cursorTrack, controls);
 				}
 			};
 
@@ -96,7 +100,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		tracks[7] = new OtMidiTrack("MasterTrack", controls, host, hardwareSurface) {
 			@Override
 			protected OtDefaultTrackLayout createLayout(final ControllerHost host) {
-				return new OtMasterTrackLayout(host, trackBank, masterTrack, cursorTrack, controls);
+				return new OtMasterTrackLayout(host, trackBank, transport, masterTrack, cursorTrack, controls);
 			}
 		};
 
@@ -137,5 +141,4 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 		noteInput.sendRawMidiEvent(asChannel.get() + BASE_CFP_STATUS, 0, 127 - cfp.get());
 		noteInput.sendRawMidiEvent(bsChannel.get() + BASE_CFP_STATUS, 0, cfp.get());
 	}
-
 }
