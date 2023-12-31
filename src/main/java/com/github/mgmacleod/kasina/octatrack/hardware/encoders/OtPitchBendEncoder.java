@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.hardware.encoders;
+package com.github.mgmacleod.kasina.octatrack.hardware.encoders;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;

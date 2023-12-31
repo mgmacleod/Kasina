@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.hardware;
+package com.github.mgmacleod.kasina.octatrack.hardware;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public abstract class OtHardwareElement {
-	
+
 	protected final int midiChannel;
 	protected final int track;
-	
+
 	protected String createId(final String name) {
 		return String.format("OT_MIDI_%d_%d_%s", track, midiChannel, name);
 	}

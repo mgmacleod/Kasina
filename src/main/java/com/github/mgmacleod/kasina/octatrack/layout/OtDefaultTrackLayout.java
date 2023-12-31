@@ -1,9 +1,9 @@
-package com.missinggreenmammals.kasina.octatrack.layout;
+package com.github.mgmacleod.kasina.octatrack.layout;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.TrackBank;
 import com.bitwig.extension.controller.api.Transport;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 /**
  * Base layout for an OT track to represent any track in Bitwig. It mostly just

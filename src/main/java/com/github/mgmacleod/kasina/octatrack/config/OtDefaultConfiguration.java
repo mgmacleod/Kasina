@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.config;
+package com.github.mgmacleod.kasina.octatrack.config;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,11 +11,11 @@ import com.bitwig.extension.controller.api.MidiIn;
 import com.bitwig.extension.controller.api.NoteInput;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
-import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
-import com.missinggreenmammals.kasina.octatrack.layout.OtMasterTrackLayout;
-import com.missinggreenmammals.kasina.octatrack.layout.OtRegularTrackLayout;
-import com.missinggreenmammals.kasina.octatrack.track.OtMidiTrack;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtMidiHardwareControls;
+import com.github.mgmacleod.kasina.octatrack.layout.OtDefaultTrackLayout;
+import com.github.mgmacleod.kasina.octatrack.layout.OtMasterTrackLayout;
+import com.github.mgmacleod.kasina.octatrack.layout.OtRegularTrackLayout;
+import com.github.mgmacleod.kasina.octatrack.track.OtMidiTrack;
 
 /**
  * Represents the configuration of the Octatrack. It's main purpose is to bring
@@ -125,7 +125,7 @@ public class OtDefaultConfiguration extends OtMidiConfiguration {
 
 		}
 	}
-	
+
 	private void handleSceneSelectionChange(final int data2, final AtomicInteger channel, final boolean isSceneA) {
 		final int oldChannel = channel.getAndSet(data2);
 		noteInput.sendRawMidiEvent(oldChannel + BASE_CFP_STATUS, 0, 0);

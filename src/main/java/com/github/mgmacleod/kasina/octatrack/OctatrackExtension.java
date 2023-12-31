@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack;
+package com.github.mgmacleod.kasina.octatrack;
 
 import com.bitwig.extension.controller.ControllerExtension;
 import com.bitwig.extension.controller.ControllerExtensionDefinition;

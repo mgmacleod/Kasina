@@ -1,11 +1,11 @@
-package com.missinggreenmammals.kasina.octatrack.hardware;
+package com.github.mgmacleod.kasina.octatrack.hardware;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.hardware.encoders.OtAftertouchEncoder;
-import com.missinggreenmammals.kasina.octatrack.hardware.encoders.OtControlChangeEncoder;
-import com.missinggreenmammals.kasina.octatrack.hardware.encoders.OtPitchBendEncoder;
-import com.missinggreenmammals.kasina.octatrack.hardware.keys.OtKeyboard;
+import com.github.mgmacleod.kasina.octatrack.hardware.encoders.OtAftertouchEncoder;
+import com.github.mgmacleod.kasina.octatrack.hardware.encoders.OtControlChangeEncoder;
+import com.github.mgmacleod.kasina.octatrack.hardware.encoders.OtPitchBendEncoder;
+import com.github.mgmacleod.kasina.octatrack.hardware.keys.OtKeyboard;
 
 import lombok.Getter;
 

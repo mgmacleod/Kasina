@@ -1,6 +1,6 @@
-package com.missinggreenmammals.kasina.octatrack.config;
+package com.github.mgmacleod.kasina.octatrack.config;
 
-import com.missinggreenmammals.kasina.octatrack.track.OtMidiTrack;
+import com.github.mgmacleod.kasina.octatrack.track.OtMidiTrack;
 
 public abstract class OtMidiConfiguration {
 
@@ -9,5 +9,5 @@ public abstract class OtMidiConfiguration {
 	public OtMidiConfiguration() {
 		tracks = new OtMidiTrack[8];
 	}
-	
+
 }

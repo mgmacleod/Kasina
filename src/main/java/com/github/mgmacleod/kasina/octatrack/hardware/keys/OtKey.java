@@ -1,18 +1,18 @@
-package com.missinggreenmammals.kasina.octatrack.hardware.keys;
+package com.github.mgmacleod.kasina.octatrack.hardware.keys;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareButton;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtHardwareElement;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtHardwareElement;
 
-/** 
+/**
  * Represents an abstract key on the Octatrack.
  */
 public abstract class OtKey extends OtHardwareElement {
-	
+
 	protected final HardwareButton button;
 	protected final int midiNote;
-	
+
 	public OtKey(final int midiNote, final int midiChannel, final int otTrack, final String name,
 			final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
