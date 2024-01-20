@@ -1,9 +1,9 @@
-package com.missinggreenmammals.kasina.octatrack.track;
+package com.github.mgmacleod.kasina.octatrack.track;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
-import com.missinggreenmammals.kasina.octatrack.layout.OtDefaultTrackLayout;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtMidiHardwareControls;
+import com.github.mgmacleod.kasina.octatrack.layout.OtDefaultTrackLayout;
 
 /**
  * Represents a MIDI track on the OT. Links an {@link OtDefaultTrackLayout} with

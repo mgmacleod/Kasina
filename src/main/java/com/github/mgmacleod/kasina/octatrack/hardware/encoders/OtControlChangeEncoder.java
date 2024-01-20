@@ -1,11 +1,12 @@
-package com.missinggreenmammals.kasina.octatrack.hardware.encoders;
+package com.github.mgmacleod.kasina.octatrack.hardware.encoders;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
 
 public class OtControlChangeEncoder extends OtEncoder {
 
-	public OtControlChangeEncoder(final int midiChannel, final int otTrack, final int ccNumber, final String name, final ControllerHost host,
+	public OtControlChangeEncoder(final int midiChannel, final int otTrack, final int ccNumber, final String name,
+			final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
 
 		super(midiChannel, otTrack, name, host, hardwareSurface);

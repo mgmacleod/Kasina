@@ -1,8 +1,8 @@
-package com.missinggreenmammals.kasina.octatrack;
+package com.github.mgmacleod.kasina.octatrack;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.config.OtDefaultConfiguration;
+import com.github.mgmacleod.kasina.octatrack.config.OtDefaultConfiguration;
 
 /**
  * Simple class to instantiate an {@link OtDefaultConfiguration} and pass it an

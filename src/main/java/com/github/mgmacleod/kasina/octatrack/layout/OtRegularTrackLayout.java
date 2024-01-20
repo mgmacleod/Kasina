@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.layout;
+package com.github.mgmacleod.kasina.octatrack.layout;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -10,7 +10,7 @@ import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.SendBank;
 import com.bitwig.extension.controller.api.Track;
 import com.bitwig.extension.controller.api.TrackBank;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtMidiHardwareControls;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtMidiHardwareControls;
 
 /**
  * An {@link OtDefaultTrackLayout} to represent a regular track in Bitwig (i.e.,
@@ -45,7 +45,8 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 	private String[] currentDeviceSlotNames;
 	private int currentDeviceSlotIndex;
 
-	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+	public OtRegularTrackLayout(final ControllerHost host, final TrackBank trackBank, final Track track,
+			final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
 
 		super(host, trackBank);
@@ -63,7 +64,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		enterChainAction = host.createAction(this::enterDeviceChain, () -> "enterDeviceChain");
 		enterGroupAction = host.createAction(this::enterGroup, () -> "enterGroup");
 		exitGroupAction = host.createAction(this::exitGroup, () -> "exitGroup");
-		
+
 		trackRemoteMode = new AtomicBoolean(true);
 
 		// Configure CursorDevice
@@ -72,8 +73,8 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 
 		deviceRemotesPage = cursorDevice
 				.createCursorRemoteControlsPage("device-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
-				null);
-		
+						null);
+
 		trackRemotesPage = createRemotesPage(controls);
 
 		// get binding targets
@@ -84,10 +85,10 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		cursorDevicePagePrevAction = host.createAction(this::handleCursorDevicePreviousAction,
 				() -> "handlePreviousAction");
 		cursorDevicePageNextAction = host.createAction(this::handleCursorDeviceNextAction, () -> "handleNextAction");
-		
+
 		initCurrentDeviceSlotProperties();
 		initShiftBindings();
-		
+
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		controls.getKeyboard().bindToTrackSoloKeyRegular(track.solo().toggleAction());
 	}
 
-	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track, final CursorTrack cursorTrack,
+	protected void preinitialize(final ControllerHost host, final TrackBank trackBank, final Track track,
+			final CursorTrack cursorTrack,
 			final OtMidiHardwareControls controls) {
 		return;
 	}
@@ -125,7 +127,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		return track.createCursorRemoteControlsPage("track-remotes-" + (controls.getOtTrack() - 1), REMOTE_PAGE_SIZE,
 				null);
 	}
-	
+
 	private void configureCursorDevice() {
 		cursorDevice.hasSlots().markInterested();
 		cursorDevice.slotNames().markInterested();
@@ -143,7 +145,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 		controls.getKeyboard().bindToNextKeyShift(enterGroupAction);
 		controls.getKeyboard().bindToPrevKeyShift(exitGroupAction);
 	}
-	
+
 	private void enterDeviceChain(final double value) {
 		if (cursorDevice.hasSlots().get()) {
 			currentDeviceSlotNames = cursorDevice.slotNames().get();
@@ -241,7 +243,7 @@ public class OtRegularTrackLayout extends OtDefaultTrackLayout {
 
 	private void initForTrackRemotes(final CursorRemoteControlsPage controlsPage,
 			final HardwareBindable selectPrevAction, final HardwareBindable selectNextAction) {
-		
+
 		/*
 		 * Bind encoders to remote controls. It looks a little wonky because of the fact
 		 * that we use CC encoders 0 and 3 for volume and pan, respectively

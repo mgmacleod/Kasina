@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.hardware.keys;
+package com.github.mgmacleod.kasina.octatrack.hardware.keys;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,15 +6,16 @@ import java.util.List;
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
 import com.bitwig.extension.controller.api.HardwareSurface;
-import com.missinggreenmammals.kasina.octatrack.hardware.OtHardwareElement;
-import com.missinggreenmammals.kasina.octatrack.hardware.Shiftable;
+import com.github.mgmacleod.kasina.octatrack.hardware.OtHardwareElement;
+import com.github.mgmacleod.kasina.octatrack.hardware.Shiftable;
 
 /**
- * Represents the chromatic keyboard of the Octatrack with support for shift functions.
+ * Represents the chromatic keyboard of the Octatrack with support for shift
+ * functions.
  *
  */
 public class OtKeyboard extends OtHardwareElement implements Shiftable {
-	
+
 	// Shift key
 	private final OtShiftKey shiftKey;
 
@@ -35,17 +36,17 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 	private final OtTrigKey trackMuteKey;
 	private final OtTrigKey trackSoloKey;
 	private final OtTrigKey trackRecordEnableKey;
-	
+
 	// Collection of all the keys representing the whole keyboard
 	private final List<OtTrigKey> trigKeys;
-	
+
 	public OtKeyboard(final int channel, final int otTrack, final ControllerHost host,
 			final HardwareSurface hardwareSurface) {
 
 		super(channel, otTrack);
-		
+
 		trigKeys = new LinkedList<>();
-		
+
 		// Instantiate keys for the 'main' octave (i.e., 3) of the chromatic keyboard
 		remotePagePrevKey = new OtTrigKey(48, channel, otTrack, "REM_PAGE_PREV", host, hardwareSurface);
 		remotePageNextKey = new OtTrigKey(49, channel, otTrack, "REM_PAGE_NEXT", host, hardwareSurface);
@@ -114,7 +115,7 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 			}
 		}
 	}
-	
+
 	public void bindToRecordKeyRegular(final HardwareBindable bindable) {
 		recordKey.setRegularBinding(bindable);
 	}
@@ -183,7 +184,7 @@ public class OtKeyboard extends OtHardwareElement implements Shiftable {
 		cursorDeviceNextKey.clearBindings();
 		cursorDevicePrevKey.clearBindings();
 	}
-	
+
 	public void bindToRecordKeyShift(final HardwareBindable bindable) {
 		recordKey.setShiftBinding(bindable);
 	}

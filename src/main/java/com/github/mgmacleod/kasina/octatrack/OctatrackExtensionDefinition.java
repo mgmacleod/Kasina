@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack;
+package com.github.mgmacleod.kasina.octatrack;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.missinggreenmammals.kasina.octatrack.hardware.keys;
+package com.github.mgmacleod.kasina.octatrack.hardware.keys;
 
 import com.bitwig.extension.controller.api.ControllerHost;
 import com.bitwig.extension.controller.api.HardwareBindable;
@@ -14,8 +14,9 @@ public class OtShiftKey extends OtKey {
 			final ControllerHost host, final HardwareSurface hardwareSurface) {
 
 		super(midiNote, midiChannel, otTrack, name, host, hardwareSurface);
-		
-		button.releasedAction().setActionMatcher(host.getMidiInPort(0).createNoteOffActionMatcher(midiChannel, midiNote));
+
+		button.releasedAction()
+				.setActionMatcher(host.getMidiInPort(0).createNoteOffActionMatcher(midiChannel, midiNote));
 	}
 
 	public void setNoteOnBinding(final HardwareBindable bindable) {
